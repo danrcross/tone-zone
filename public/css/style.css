@@ -1,0 +1,14 @@
+.disp-card {
+  border-radius: 5%;
+  border: black solid 2px;
+  width: 20%;
+  margin-top: 10px;
+  padding: 5px;
+}
+.synth-card {
+  border-radius: 4%;
+  border: black solid 2px;
+  width: 20%;
+  margin-top: 10px;
+  padding: 5px;
+}

@@ -18,6 +18,11 @@ const vol = new Tone.Volume(0).toDestination();
 const eq = new Tone.EQ3(0, 0, 0).connect(vol);
 var synth = new Tone.AMSynth().connect(eq);
 
+if (window.location.pathname === "/2") {
+  var synth2 = new Tone.AMSynth().toDestination();
+  var synth3 = new Tone.AMSynth().toDestination();
+}
+
 // ChatGPT created this long array for me! would have been needlessly tedious otherwise.
 const notesArr = [
   { frequency: 27.5, pitch: "A0", enharmonic: null, value: 1 },
@@ -135,11 +140,11 @@ export default class Hi {
   }
 
   dispNote(ddNoteVal, freqName, dbLv) {
-    curPitchEl.text("Pitch: " + ddNoteVal);
-    curFreqEl.text("Frequency: " + freqName[0].frequency + " Hz");
-    curVolEl.text("Volume: " + this.curVolVal + " db");
+    curPitchEl.text(ddNoteVal);
+    curFreqEl.text(freqName[0].frequency + " Hz");
+    curVolEl.text(this.curVolVal + " db");
     var curDurNota = Tone.Time(this.curDurVal).toNotation();
-    curDurEl.text("Duration: " + this.curDurVal * 1000 + " ms, " + curDurNota);
+    curDurEl.text(this.curDurVal * 1000 + " ms, " + curDurNota);
   }
 
   playNDisplay() {
@@ -211,4 +216,37 @@ export default class Hi {
     // do some error handling here
     return;
   }
+  async getKeyNote(key) {
+    if (key.note > 20 && key.note < 109) {
+      var pitchName = notesArr.filter((note) => {
+        if (Math.round(note.frequency) === Math.round(key.frequency)) {
+          return note;
+        }
+        return;
+      });
+    }
+    return pitchName[0].frequency;
+  }
+  async attackSynth2(key) {
+    var note = await this.getKeyNote(key);
+    await synth2.triggerAttack(note);
+  }
+  releaseSynth2(key) {
+    synth2.triggerRelease();
+  }
+  unplugSynth2() {
+    synth2.dispose();
+  }
+  async attackSynth3(key) {
+    var note = await this.getKeyNote(key);
+    await synth3.triggerAttack(note);
+  }
+  releaseSynth3(key) {
+    synth3.triggerRelease();
+  }
+  unplugSynth3() {
+    synth3.dispose();
+  }
 }
+
+console.log(synth2);
