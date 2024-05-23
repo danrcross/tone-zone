@@ -9,6 +9,9 @@ import {
   curDurEl,
   curFreqEl,
   curVolEl,
+  curIntEl,
+  curIntAbbrEl,
+  curIntHsEl,
   notesList,
   playbtn,
   sliderP,
@@ -181,40 +184,65 @@ switch (window.location.pathname) {
     var activeNotes = [];
     const keyboard2 = new AudioKeys({
       rows: 1,
-      polyphony: 2,
     });
+    // define behavior when a key is pressed down
+    // I wonder if these down/up functions could be simplified...
     keyboard2.down(async (key) => {
+      // if no active notes...
       if (!activeNotes.length) {
+        //... get freq of key pressed
         var freqKey = await MyHi.getKeyNote(key);
-
+        // create new 'note' object; push to array
         var note = {
           active: true,
           freq: freqKey,
+          synth: 2,
         };
         activeNotes.push(note);
+        // play synth at 'key'
         MyHi.attackSynth2(key);
       } else if (activeNotes.length === 1) {
+        // similar to above, but if a note is active, second synth will be activated
         var freqKey = await MyHi.getKeyNote(key);
         var note = {
           active: true,
           freq: freqKey,
+          synth: 3,
         };
         activeNotes.push(note);
+        if (activeNotes.length === 2) {
+          var freq1 = activeNotes[0].freq;
+          var freq2 = activeNotes[1].freq;
+          MyHi.displayInt(freq1, freq2);
+        }
         MyHi.attackSynth3(key);
       }
+
+      console.log(activeNotes);
     });
+
+    // define behavior when key is released
     keyboard2.up(async (key) => {
+      // get frequency corresponding to key released
       var checkFreq = await MyHi.getKeyNote(key);
-      activeNotes.forEach((note) => {
+      console.log(checkFreq);
+      var myInd = null;
+      // get index of my note
+      activeNotes.forEach((note, index) => {
         if (note.freq === checkFreq) {
-          var noteInd = activeNotes.indexOf(note);
-          console.log(noteInd);
-          activeNotes.splice(noteInd);
-          //just need to release the correct note now
-          // MyHi.releaseSynth2();
-          // MyHi.releaseSynth3();
+          return (myInd = index);
         }
       });
+      // release synth that corresponds to 'synth' property of note released;
+      // remove 'note' object from array of active notes
+      if (activeNotes[myInd].synth === 2) {
+        MyHi.releaseSynth2();
+        activeNotes.splice(myInd, 1);
+      } else if (activeNotes[myInd].synth === 3) {
+        MyHi.releaseSynth3();
+        activeNotes.splice(myInd, 1);
+      }
     });
+
     break;
 }

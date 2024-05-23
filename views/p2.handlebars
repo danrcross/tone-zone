@@ -4,6 +4,12 @@
   <h3>Volume: <span id="cur-vol"></span></h3>
   <h3>Duration: <span id="cur-dur"></span></h3>
 </div>
+<div class="disp-card">
+  <h3>Interval (name): <span id="cur-int"></span></h3>
+  <h3>Interval (abbr): <span id="cur-int-abbr"></span></h3>
+  <h3>Interval (# Half-Steps): <span id="cur-int-hs"></span></h3>
+</div>
+
 <div class="synth-card">
   <label for="synth-list"><h3>Synth:</h3></label>
   <select name="synth-list" id="synth-list">
@@ -15,7 +21,7 @@
   <button id="playbtn">Play Note</button>
   <button id="play2">Play 2</button>
 </div>
-<div>
+{{! <div>
   <form id="reservation">
     <label for="pitch"><h3>Pitch</h3></label>
     <!-- ChatGPT helped generate this list of options, helping me to avoid needless tedium -->
@@ -110,8 +116,8 @@
       <option>C8</option>
     </select>
   </form>
-</div>
-<div>
+</div> }}
+{{! <div>
   <h3>Volume (decibels)</h3>
   <div id="slider-v">
     <div id="slider-vertical" class="ui-slider-handle"></div>
@@ -138,6 +144,6 @@
   <div id="slider-d">
     <div id="custom-handle-2" class="ui-slider-handle"></div>
   </div>
-</div>
+</div> }}
 
 <img id="key-map" src="assets/images/audiokeys-mapping-rows1.jpg" />

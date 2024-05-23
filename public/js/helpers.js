@@ -5,6 +5,9 @@ import {
   curDurEl,
   curFreqEl,
   curVolEl,
+  curIntEl,
+  curIntAbbrEl,
+  curIntHsEl,
   notesList,
   playbtn,
   sliderP,
@@ -115,6 +118,37 @@ const notesArr = [
   { frequency: 4186.01, pitch: "C8", enharmonic: null, value: 88 },
 ];
 
+const intArr = [
+  {
+    value: 0,
+    name: "unison",
+  },
+  { value: 1, name: "Minor 2nd", abbr: "m2" },
+  { value: 2, name: "Major 2nd", abbr: "M2" },
+  { value: 3, name: "Minor 3rd", abbr: "m3" },
+  { value: 4, name: "Major 3rd", abbr: "M3" },
+  { value: 5, name: "Perfect 4th", abbr: "P4" },
+  { value: 6, name: "Tritone/Augmented 4th/Diminished 5th", abbr: "A4/d5" },
+  { value: 7, name: "Perfect 5th", abbr: "P5" },
+  { value: 8, name: "Minor 6th", abbr: "m6" },
+  { value: 9, name: "Major 6th", abbr: "M6" },
+  { value: 10, name: "Minor 7th", abbr: "m7" },
+  { value: 11, name: "Major 7th", abbr: "M7" },
+  { value: 12, name: "Octave", abbr: "8ve" },
+  { value: 13, name: "Minor 2nd", abbr: "m2" },
+  { value: 14, name: "Minor 2nd", abbr: "m2" },
+  { value: 15, name: "Minor 2nd", abbr: "m2" },
+  { value: 16, name: "Minor 2nd", abbr: "m2" },
+  { value: 17, name: "Minor 2nd", abbr: "m2" },
+  { value: 18, name: "Minor 2nd", abbr: "m2" },
+  { value: 19, name: "Minor 2nd", abbr: "m2" },
+  { value: 20, name: "Minor 2nd", abbr: "m2" },
+  { value: 21, name: "Minor 2nd", abbr: "m2" },
+  { value: 22, name: "Minor 2nd", abbr: "m2" },
+  { value: 23, name: "Minor 2nd", abbr: "m2" },
+  { value: 24, name: "Minor 2nd", abbr: "m2" },
+];
+
 export default class Hi {
   constructor(
     curNoteVal,
@@ -132,11 +166,12 @@ export default class Hi {
     this.curHighVal = curHighVal;
   }
   matchNote(noteVal) {
-    return notesArr.filter((note) => {
-      if (noteVal === note.pitch) {
-        return note;
-      }
-    });
+    const newArr = notesArr.filter((note) => noteVal === note.pitch);
+    return newArr;
+  }
+  matchNoteFreq(freqVal) {
+    const newArr = notesArr.filter((note) => freqVal === note.frequency);
+    return newArr[0];
   }
 
   dispNote(ddNoteVal, freqName, dbLv) {
@@ -155,27 +190,27 @@ export default class Hi {
     synth.triggerAttackRelease(ddNoteVal, this.curDurVal);
   }
   // handles user synth selection from dropdown
-  switchSynth() {
+  switchSynth(aSynthList, aSynth) {
     // when a change occurs (new item selected), the selected value is stored in 'curSynth'
-    var curSynth = synthList.val();
+    var curSynth = aSynthList.val();
     // different cases obtain depending on user selection.
     // each case will disconnect old synth and instantiate the new one.
     switch (curSynth) {
       case "AM Synth":
-        synth.disconnect();
-        synth = new Tone.AMSynth().connect(eq);
+        aSynth.disconnect();
+        aSynth = new Tone.AMSynth().connect(eq);
         break;
       case "FM Synth":
-        synth.disconnect();
-        synth = new Tone.FMSynth().connect(eq);
+        aSynth.disconnect();
+        aSynth = new Tone.FMSynth().connect(eq);
         break;
       case "Mono Synth":
-        synth.disconnect();
+        aSynth.disconnect();
         synth = new Tone.MonoSynth().connect(eq);
         break;
       case "Simple Synth":
-        synth.disconnect();
-        synth = new Tone.Synth().connect(eq);
+        aSynth.disconnect();
+        aSynth = new Tone.Synth().connect(eq);
         break;
     }
   }
@@ -247,6 +282,28 @@ export default class Hi {
   unplugSynth3() {
     synth3.dispose();
   }
+  // need to create logic for inverted intervals
+  displayInt(freq1, freq2) {
+    var note1 = this.matchNoteFreq(freq1);
+    var note2 = this.matchNoteFreq(freq2);
+    var intFactor = note2.value - note1.value;
+    if (intFactor < 0) {
+      intFactor = intFactor * -1;
+    }
+    var intName;
+    var intAbbr;
+    var intHs;
+    intArr.forEach((int) => {
+      if (int.value === intFactor) {
+        intName = int.name;
+        intAbbr = int.abbr;
+        intHs = int.value;
+      }
+    });
+    // can still add element with abbr...
+    curIntEl.text(intName);
+    curIntAbbrEl.text(intAbbr);
+    curIntHsEl.text(intHs);
+    return;
+  }
 }
-
-console.log(synth2);
