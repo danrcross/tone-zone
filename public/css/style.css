@@ -1,14 +1,183 @@
+/* main.handlebars */
+
+nav {
+  display: block;
+  border-bottom: solid black 2px;
+}
+
+nav ul {
+  padding: 5px;
+  text-align: center;
+}
+
+nav h1 {
+  font-size: 2em;
+  text-align: left;
+  padding-bottom: 5px;
+}
+
+nav li {
+  padding: 15px;
+  display: inline;
+}
+
+/* p2.handlebars */
+.p2-container {
+  padding: 20px;
+}
+/* pertaining to display */
+.disp-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .disp-card {
   border-radius: 5%;
   border: black solid 2px;
-  width: 20%;
+  width: 30%;
   margin-top: 10px;
   padding: 5px;
+}
+
+.disp-card h2 {
+  text-align: center;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info-key {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.info-val {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.info-val > span {
+  display: block;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: 200;
+  unicode-bidi: isolate;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.info-col {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.info-col > span {
+  display: block;
+  text-align: center;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: 200;
+  unicode-bidi: isolate;
+}
+.synth-rack {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 }
 .synth-card {
   border-radius: 4%;
   border: black solid 2px;
-  width: 20%;
+  width: 43%;
   margin-top: 10px;
-  padding: 5px;
+  padding: 10px;
 }
+
+.synth-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0px 20px;
+}
+
+.control-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0px 20px;
+}
+.control-mod {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ui-slider-vertical .ui-slider-handle {
+  left: -1em;
+}
+.v-sli.sli-han {
+  width: 3em;
+  height: 1.6em;
+  margin-top: -0.8em;
+  text-align: center;
+  line-height: 1.6em;
+}
+
+.eq-fader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.kbrd-map {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+#key-map {
+  border-radius: 5%;
+  width: 80%;
+  border: solid black 2px;
+}
+
+/* Was used in p1, might delete... */
+/* #custom-handle-2 {
+  width: 3em;
+  height: 1.6em;
+  top: 50%;
+  margin-top: -0.8em;
+  text-align: center;
+  line-height: 1.6em;
+} */
+
+/* #handle-eq-low {
+  width: 3em;
+  height: 1.6em;
+  margin-top: -0.8em;
+  text-align: center;
+  line-height: 1.6em;
+}
+#handle-eq-mid {
+  width: 3em;
+  height: 1.6em;
+  margin-top: -0.8em;
+  text-align: center;
+  line-height: 1.6em;
+}
+#handle-eq-high {
+  width: 3em;
+  height: 1.6em;
+  margin-top: -0.8em;
+  text-align: center;
+  line-height: 1.6em;
+} */

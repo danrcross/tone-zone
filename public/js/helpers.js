@@ -15,6 +15,30 @@ import {
   handleLow,
   handleMid,
   handleHigh,
+  synthList2A,
+  curPitch2AEl,
+  curFreq2AEl,
+  curVol2AEl,
+  synthList2B,
+  curPitch2BEl,
+  curFreq2BEl,
+  curVol2BEl,
+  volSlider2A,
+  volSlider2B,
+  volHandle2A,
+  volHandle2B,
+  handleHigh2A,
+  handleHigh2B,
+  handleLow2A,
+  handleLow2B,
+  handleMid2A,
+  handleMid2B,
+  sliderLow2A,
+  sliderMid2A,
+  sliderHigh2A,
+  sliderLow2B,
+  sliderMid2B,
+  sliderHigh2B,
 } from "./dom.js";
 // instruments up here
 const vol = new Tone.Volume(0).toDestination();
@@ -22,8 +46,6 @@ const eq = new Tone.EQ3(0, 0, 0).connect(vol);
 var synth = new Tone.AMSynth().connect(eq);
 
 if (window.location.pathname === "/2") {
-  var synth2 = new Tone.AMSynth().toDestination();
-  var synth3 = new Tone.AMSynth().toDestination();
 }
 
 // ChatGPT created this long array for me! would have been needlessly tedious otherwise.
@@ -173,13 +195,14 @@ export default class Hi {
     const newArr = notesArr.filter((note) => freqVal === note.frequency);
     return newArr[0];
   }
-
-  dispNote(ddNoteVal, freqName, dbLv) {
-    curPitchEl.text(ddNoteVal);
-    curFreqEl.text(freqName[0].frequency + " Hz");
-    curVolEl.text(this.curVolVal + " db");
-    var curDurNota = Tone.Time(this.curDurVal).toNotation();
-    curDurEl.text(this.curDurVal * 1000 + " ms, " + curDurNota);
+  // temporarily disabled duration display, as it is not used on p2
+  dispNote(ddNoteVal, freqName, pitchEl, freqEl, volEl, dbLv) {
+    pitchEl.text(ddNoteVal);
+    // the acquisition of freqName will need to be altered for p1
+    freqEl.text(freqName + " Hz");
+    volEl.text(this.curVolVal + " db");
+    // var curDurNota = Tone.Time(this.curDurVal).toNotation();
+    // curDurEl.text(this.curDurVal * 1000 + " ms, " + curDurNota);
   }
 
   playNDisplay() {
@@ -190,29 +213,29 @@ export default class Hi {
     synth.triggerAttackRelease(ddNoteVal, this.curDurVal);
   }
   // handles user synth selection from dropdown
-  switchSynth(aSynthList, aSynth) {
+  async switchSynth(aSynthList, aSynth, aEQ) {
     // when a change occurs (new item selected), the selected value is stored in 'curSynth'
     var curSynth = aSynthList.val();
     // different cases obtain depending on user selection.
     // each case will disconnect old synth and instantiate the new one.
+    if (aSynth) {
+      aSynth.disconnect();
+    }
     switch (curSynth) {
       case "AM Synth":
-        aSynth.disconnect();
-        aSynth = new Tone.AMSynth().connect(eq);
+        aSynth = new Tone.AMSynth().connect(aEQ);
         break;
       case "FM Synth":
-        aSynth.disconnect();
-        aSynth = new Tone.FMSynth().connect(eq);
+        aSynth = new Tone.FMSynth().connect(aEQ);
         break;
       case "Mono Synth":
-        aSynth.disconnect();
-        synth = new Tone.MonoSynth().connect(eq);
+        aSynth = new Tone.MonoSynth().connect(aEQ);
         break;
       case "Simple Synth":
-        aSynth.disconnect();
-        aSynth = new Tone.Synth().connect(eq);
+        aSynth = new Tone.Synth().connect(aEQ);
         break;
     }
+    return aSynth;
   }
 
   pitchSlide(event, ui) {
@@ -221,15 +244,16 @@ export default class Hi {
     this.playNDisplay();
     notesList[0].selectedIndex = ui.value - 1;
   }
-
-  volSlide(event, ui) {
+  // will need to alter p1 to adapt to these flexible parameters
+  volSlide(event, ui, handle, vol) {
+    console.log(handle);
     handle.text(ui.value);
     vol.volume.value = ui.value;
     this.curVolVal = ui.value;
   }
 
-  eqSlide(ui, band, handle) {
-    eq[band].value = ui.value;
+  eqSlide(ui, band, handle, anEq) {
+    anEq[band].value = ui.value;
     handle.text(ui.value);
   }
   keyHandler(key) {
@@ -260,27 +284,21 @@ export default class Hi {
         return;
       });
     }
-    return pitchName[0].frequency;
+    return {
+      freq: pitchName[0].frequency,
+      pitch: pitchName[0].pitch,
+      enharm: pitchName[0].enharmonic,
+    };
   }
-  async attackSynth2(key) {
+  async attackSynthNum(synthNum, key) {
     var note = await this.getKeyNote(key);
-    await synth2.triggerAttack(note);
+    await synthNum.triggerAttack(note.freq);
   }
-  releaseSynth2(key) {
-    synth2.triggerRelease();
+  releaseSynthNum(synthNum, key) {
+    synthNum.triggerRelease();
   }
-  unplugSynth2() {
-    synth2.dispose();
-  }
-  async attackSynth3(key) {
-    var note = await this.getKeyNote(key);
-    await synth3.triggerAttack(note);
-  }
-  releaseSynth3(key) {
-    synth3.triggerRelease();
-  }
-  unplugSynth3() {
-    synth3.dispose();
+  unplugSynthNum(synthNum) {
+    synthNum.dispose();
   }
   // need to create logic for inverted intervals
   displayInt(freq1, freq2) {

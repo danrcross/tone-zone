@@ -20,6 +20,30 @@ import {
   handleMid,
   handleHigh,
   play2,
+  synthList2A,
+  curPitch2AEl,
+  curFreq2AEl,
+  curVol2AEl,
+  synthList2B,
+  curPitch2BEl,
+  curFreq2BEl,
+  curVol2BEl,
+  volSlider2A,
+  volSlider2B,
+  volHandle2A,
+  volHandle2B,
+  handleHigh2A,
+  handleHigh2B,
+  handleLow2A,
+  handleLow2B,
+  handleMid2A,
+  handleMid2B,
+  sliderLow2A,
+  sliderMid2A,
+  sliderHigh2A,
+  sliderLow2B,
+  sliderMid2B,
+  sliderHigh2B,
 } from "./dom.js";
 
 // Add functionality to nav bar
@@ -91,7 +115,7 @@ switch (window.location.pathname) {
     });
 
     // initialize volume slider
-
+    //
     $("#slider-v").slider({
       min: -30,
       max: 30,
@@ -100,6 +124,7 @@ switch (window.location.pathname) {
         handle.text($(this).slider("value"));
       },
       slide: function (event, ui) {
+        // need to alter this, as helper was altered
         MyHi.volSlide(event, ui);
       },
     });
@@ -180,34 +205,169 @@ switch (window.location.pathname) {
     break;
 
   case "/2":
+    const vol2A = new Tone.Volume(0).toDestination();
+    const eq2A = new Tone.EQ3(0, 0, 0).connect(vol2A);
+    var synth2A = new Tone.AMSynth().connect(eq2A);
+    const vol2B = new Tone.Volume(0).toDestination();
+    const eq2B = new Tone.EQ3(0, 0, 0).connect(vol2B);
+    var synth2B = new Tone.AMSynth().connect(eq2B);
     // Create my keyboard controller
     var activeNotes = [];
     const keyboard2 = new AudioKeys({
       rows: 1,
     });
+    // define behaviors of interactable elements on page;
+
+    synthList2A.on("change", async () => {
+      synth2A = await MyHi.switchSynth(synthList2A, synth2A, eq2A);
+    });
+    // by default, browser will change this list when it is 'in focus' (after being clicked). This handler will prevent that.
+    synthList2A.on("keydown", function (event) {
+      event.preventDefault();
+    });
+    synthList2B.on("change", async () => {
+      synth2B = await MyHi.switchSynth(synthList2B, synth2B, eq2B);
+    });
+    synthList2B.on("keydown", function (event) {
+      event.preventDefault();
+    });
+    // initialize sliders:
+    volSlider2A.slider({
+      min: -30,
+      max: 30,
+      orientation: "vertical",
+      create: function () {
+        volHandle2A.text($(this).slider("value"));
+      },
+      slide: function (event, ui) {
+        MyHi.volSlide(event, ui, volHandle2A, vol2A);
+      },
+    });
+
+    volSlider2B.slider({
+      min: -30,
+      max: 30,
+      orientation: "vertical",
+      create: function () {
+        volHandle2B.text($(this).slider("value"));
+      },
+      slide: function (event, ui) {
+        MyHi.volSlide(event, ui, volHandle2B, vol2B);
+      },
+    });
+
+    sliderLow2A.slider({
+      min: -50,
+      max: 50,
+      step: 1,
+      orientation: "vertical",
+      create: function () {
+        handleLow2A.text($(this).slider("value"));
+      },
+      slide: function (event, ui) {
+        MyHi.eqSlide(ui, "low", handleLow2A, eq2A);
+      },
+    });
+
+    sliderMid2A.slider({
+      min: -50,
+      max: 50,
+      step: 1,
+      orientation: "vertical",
+      create: function () {
+        handleMid2A.text($(this).slider("value"));
+      },
+      slide: function (event, ui) {
+        MyHi.eqSlide(ui, "mid", handleMid2A, eq2A);
+      },
+    });
+
+    sliderHigh2A.slider({
+      min: -50,
+      max: 50,
+      step: 1,
+      orientation: "vertical",
+      create: function () {
+        handleHigh2A.text($(this).slider("value"));
+      },
+      slide: function (event, ui) {
+        MyHi.eqSlide(ui, "high", handleHigh2A, eq2A);
+      },
+    });
+
+    sliderLow2B.slider({
+      min: -50,
+      max: 50,
+      step: 1,
+      orientation: "vertical",
+      create: function () {
+        handleLow2B.text($(this).slider("value"));
+      },
+      slide: function (event, ui) {
+        MyHi.eqSlide(ui, "low", handleLow2B, eq2B);
+      },
+    });
+
+    sliderMid2B.slider({
+      min: -50,
+      max: 50,
+      step: 1,
+      orientation: "vertical",
+      create: function () {
+        handleMid2B.text($(this).slider("value"));
+      },
+      slide: function (event, ui) {
+        MyHi.eqSlide(ui, "mid", handleMid2B, eq2B);
+      },
+    });
+
+    sliderHigh2B.slider({
+      min: -50,
+      max: 50,
+      step: 1,
+      orientation: "vertical",
+      create: function () {
+        handleHigh2B.text($(this).slider("value"));
+      },
+      slide: function (event, ui) {
+        MyHi.eqSlide(ui, "high", handleHigh2B, eq2B);
+      },
+    });
+
     // define behavior when a key is pressed down
     // I wonder if these down/up functions could be simplified...
     keyboard2.down(async (key) => {
       // if no active notes...
       if (!activeNotes.length) {
         //... get freq of key pressed
-        var freqKey = await MyHi.getKeyNote(key);
+        var keyData = await MyHi.getKeyNote(key);
         // create new 'note' object; push to array
         var note = {
           active: true,
-          freq: freqKey,
-          synth: 2,
+          freq: keyData.freq,
+          synth: "2A",
+          pitch: keyData.pitch,
+          enharmonic: keyData.enharm,
         };
         activeNotes.push(note);
         // play synth at 'key'
-        MyHi.attackSynth2(key);
+        MyHi.attackSynthNum(synth2A, key);
+        MyHi.dispNote(
+          note.pitch,
+          note.freq,
+          curPitch2AEl,
+          curFreq2AEl,
+          curVol2AEl
+        );
       } else if (activeNotes.length === 1) {
         // similar to above, but if a note is active, second synth will be activated
-        var freqKey = await MyHi.getKeyNote(key);
+        var keyData = await MyHi.getKeyNote(key);
         var note = {
           active: true,
-          freq: freqKey,
-          synth: 3,
+          freq: keyData.freq,
+          synth: "2B",
+          pitch: keyData.pitch,
+          enharmonic: keyData.enharm,
         };
         activeNotes.push(note);
         if (activeNotes.length === 2) {
@@ -215,31 +375,35 @@ switch (window.location.pathname) {
           var freq2 = activeNotes[1].freq;
           MyHi.displayInt(freq1, freq2);
         }
-        MyHi.attackSynth3(key);
+        MyHi.attackSynthNum(synth2B, key);
+        MyHi.dispNote(
+          note.pitch,
+          note.freq,
+          curPitch2BEl,
+          curFreq2BEl,
+          curVol2BEl
+        );
       }
-
-      console.log(activeNotes);
     });
 
     // define behavior when key is released
     keyboard2.up(async (key) => {
       // get frequency corresponding to key released
       var checkFreq = await MyHi.getKeyNote(key);
-      console.log(checkFreq);
       var myInd = null;
       // get index of my note
       activeNotes.forEach((note, index) => {
-        if (note.freq === checkFreq) {
+        if (note.freq === checkFreq.freq) {
           return (myInd = index);
         }
       });
       // release synth that corresponds to 'synth' property of note released;
       // remove 'note' object from array of active notes
-      if (activeNotes[myInd].synth === 2) {
-        MyHi.releaseSynth2();
+      if (activeNotes[myInd].synth === "2A") {
+        MyHi.releaseSynthNum(synth2A);
         activeNotes.splice(myInd, 1);
-      } else if (activeNotes[myInd].synth === 3) {
-        MyHi.releaseSynth3();
+      } else if (activeNotes[myInd].synth === "2B") {
+        MyHi.releaseSynthNum(synth2B);
         activeNotes.splice(myInd, 1);
       }
     });

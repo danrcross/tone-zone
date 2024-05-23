@@ -1,27 +1,152 @@
-<div class="disp-card">
-  <h3>Pitch: <span id="cur-pitch"></span></h3>
-  <h3>Frequency: <span id="cur-freq"></span></h3>
-  <h3>Volume: <span id="cur-vol"></span></h3>
-  <h3>Duration: <span id="cur-dur"></span></h3>
-</div>
-<div class="disp-card">
-  <h3>Interval (name): <span id="cur-int"></span></h3>
-  <h3>Interval (abbr): <span id="cur-int-abbr"></span></h3>
-  <h3>Interval (# Half-Steps): <span id="cur-int-hs"></span></h3>
-</div>
+<div class="p2-container">
+  <div class="disp-container">
+    <div class="disp-card">
+      <h2>Synth A</h2>
+      <div class="info">
+        <div class="info-key">
+          <h3>Pitch </h3>
+          <h3>Frequency </h3>
+          <h3>Volume </h3>
+        </div>
+        <div class="info-val">
+          <span id="cur-pitch-2A"></span>
+          <span id="cur-freq-2A"></span>
+          <span id="cur-vol-2A"></span>
+        </div>
+      </div>
+    </div>
+    <div class="disp-card">
+      <h2>Harmonic Interval</h2>
+      <div class="info-row">
+        <div class="info-col">
+          <h3>Name </h3>
+          <span id="cur-int"></span>
+        </div>
+        <div class="info-col">
+          <h3>Abbreviation </h3>
+          <span id="cur-int-abbr" class="unruly-abbr"></span>
+        </div>
+        <div class="info-col">
+          <h3># Half-Steps </h3>
+          <span id="cur-int-hs"></span>
+        </div>
+      </div>
+    </div>
+    <div class="disp-card">
+      <h2>Synth B</h2>
+      <div class="info">
+        <div class="info-key">
+          <h3>Pitch </h3>
+          <h3>Frequency </h3>
+          <h3>Volume </h3>
+        </div>
+        <div class="info-val">
+          <span id="cur-pitch-2B"></span>
+          <span id="cur-freq-2B"></span>
+          <span id="cur-vol-2B"></span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div class="synth-card">
-  <label for="synth-list"><h3>Synth:</h3></label>
-  <select name="synth-list" id="synth-list">
-    <option>AM Synth</option>
-    <option>FM Synth</option>
-    <option>Mono Synth</option>
-    <option>Simple Synth</option>
-  </select>
-  <button id="playbtn">Play Note</button>
-  <button id="play2">Play 2</button>
-</div>
-{{! <div>
+  <div class="synth-rack">
+    <div class="synth-card">
+      <div class="synth-header">
+        <div>
+          <h2>Synth A</h2>
+        </div>
+        <div>
+          <label for="synth-list"><h3>Synth Type:</h3></label>
+          <select name="synth-list" id="synth-list-2a">
+            <option>AM Synth</option>
+            <option>FM Synth</option>
+            <option>Mono Synth</option>
+            <option>Simple Synth</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-panel">
+        <div class="control-mod">
+          <h3>Volume A(decibels)</h3>
+          <div class="slider" id="slider-v-2a">
+            <div id="vol-hand-2a" class="v-sli sli-han ui-slider-handle"></div>
+          </div>
+        </div>
+        <div class="control-mod">
+          <h3>Equalizer A(Low-Mid-High)</h3>
+          <div class="eq-fader">
+            <div id="slider-eq-low-2a">
+              <div
+                id="hand-eq-l-2a"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+            <div id="slider-eq-mid-2a">
+              <div
+                id="hand-eq-m-2a"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+            <div id="slider-eq-high-2a">
+              <div
+                id="hand-eq-h-2a"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="synth-card">
+      <div class="synth-header">
+        <div>
+          <h2>Synth B</h2>
+        </div>
+        <div>
+          <label for="synth-list"><h3>Synth Type:</h3></label>
+          <select name="synth-list" id="synth-list-2b">
+            <option>AM Synth</option>
+            <option>FM Synth</option>
+            <option>Mono Synth</option>
+            <option>Simple Synth</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-panel">
+        <div class="control-mod">
+          <h3>Volume B(decibels)</h3>
+          <div class="slider" id="slider-v-2b">
+            <div id="vol-hand-2b" class="v-sli sli-han ui-slider-handle"></div>
+          </div>
+        </div>
+        <div class="control-mod">
+          <h3>Equalizer B(Low-Mid-High)</h3>
+          <div class="eq-fader">
+            <div id="slider-eq-low-2b">
+              <div
+                id="hand-eq-l-2b"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+            <div id="slider-eq-mid-2b">
+              <div
+                id="hand-eq-m-2b"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+            <div id="slider-eq-high-2b">
+              <div
+                id="hand-eq-h-2b"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{! <div>
   <form id="reservation">
     <label for="pitch"><h3>Pitch</h3></label>
     <!-- ChatGPT helped generate this list of options, helping me to avoid needless tedium -->
@@ -117,33 +242,13 @@
     </select>
   </form>
 </div> }}
-{{! <div>
-  <h3>Volume (decibels)</h3>
-  <div id="slider-v">
-    <div id="slider-vertical" class="ui-slider-handle"></div>
-  </div>
-</div>
-<div>
-  <h3>Equalizer (Low-Mid-High)</h3>
-  <div class="eq-fader">
-    <div id="slider-eq-low">
-      <div id="handle-eq-low" class="ui-slider-handle"></div>
-    </div>
-
-    <div id="slider-eq-mid">
-      <div id="handle-eq-mid" class="ui-slider-handle"></div>
-    </div>
-
-    <div id="slider-eq-high">
-      <div id="handle-eq-high" class="ui-slider-handle"></div>
-    </div>
-  </div>
-</div>
-<div>
+  {{!<div>
   <h3>Duration (milliseconds)</h3>
   <div id="slider-d">
     <div id="custom-handle-2" class="ui-slider-handle"></div>
   </div>
 </div> }}
-
-<img id="key-map" src="assets/images/audiokeys-mapping-rows1.jpg" />
+  <div class="kbrd-map">
+    <img id="key-map" src="assets/images/audiokeys-mapping-rows1.jpg" />
+  </div>
+</div>
