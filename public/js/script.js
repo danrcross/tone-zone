@@ -44,6 +44,30 @@ import {
   sliderLow2B,
   sliderMid2B,
   sliderHigh2B,
+  synthList3A,
+  curPitch3AEl,
+  curFreq3AEl,
+  curVol3AEl,
+  synthList3B,
+  curPitch3BEl,
+  curFreq3BEl,
+  curVol3BEl,
+  volSlider3A,
+  volSlider3B,
+  volHandle3A,
+  volHandle3B,
+  handleHigh3A,
+  handleHigh3B,
+  handleLow3A,
+  handleLow3B,
+  handleMid3A,
+  handleMid3B,
+  sliderLow3A,
+  sliderMid3A,
+  sliderHigh3A,
+  sliderLow3B,
+  sliderMid3B,
+  sliderHigh3B,
 } from "./dom.js";
 
 // Add functionality to nav bar
@@ -409,4 +433,5 @@ switch (window.location.pathname) {
     });
 
     break;
+  case "/3":
 }

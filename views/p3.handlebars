@@ -1,0 +1,254 @@
+<div class="p3-container">
+  <div class="disp-container">
+    <div class="disp-card">
+      <h2>Synth A</h2>
+      <div class="info">
+        <div class="info-key">
+          <h3>Pitch </h3>
+          <h3>Frequency </h3>
+          <h3>Volume </h3>
+        </div>
+        <div class="info-val">
+          <span id="cur-pitch-3A"></span>
+          <span id="cur-freq-3A"></span>
+          <span id="cur-vol-3A"></span>
+        </div>
+      </div>
+    </div>
+    <div class="disp-card">
+      <h2>Harmonic Interval</h2>
+      <div class="info-row">
+        <div class="info-col">
+          <h3>Name </h3>
+          <span id="cur-int"></span>
+        </div>
+        <div class="info-col">
+          <h3>Abbreviation </h3>
+          <span id="cur-int-abbr" class="unruly-abbr"></span>
+        </div>
+        <div class="info-col">
+          <h3># Half-Steps </h3>
+          <span id="cur-int-hs"></span>
+        </div>
+      </div>
+    </div>
+    <div class="disp-card">
+      <h2>Synth B</h2>
+      <div class="info">
+        <div class="info-key">
+          <h3>Pitch </h3>
+          <h3>Frequency </h3>
+          <h3>Volume </h3>
+        </div>
+        <div class="info-val">
+          <span id="cur-pitch-3B"></span>
+          <span id="cur-freq-3B"></span>
+          <span id="cur-vol-3B"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="synth-rack">
+    <div class="synth-card">
+      <div class="synth-header">
+        <div>
+          <h2>Synth A</h2>
+        </div>
+        <div>
+          <label for="synth-list"><h3>Synth Type:</h3></label>
+          <select name="synth-list" id="synth-list-3a">
+            <option>AM Synth</option>
+            <option>FM Synth</option>
+            <option>Mono Synth</option>
+            <option>Simple Synth</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-panel">
+        <div class="control-mod">
+          <h3>Volume A(decibels)</h3>
+          <div class="slider" id="slider-v-3a">
+            <div id="vol-hand-3a" class="v-sli sli-han ui-slider-handle"></div>
+          </div>
+        </div>
+        <div class="control-mod">
+          <h3>Equalizer A(Low-Mid-High)</h3>
+          <div class="eq-fader">
+            <div id="slider-eq-low-3a">
+              <div
+                id="hand-eq-l-3a"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+            <div id="slider-eq-mid-3a">
+              <div
+                id="hand-eq-m-3a"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+            <div id="slider-eq-high-3a">
+              <div
+                id="hand-eq-h-3a"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="synth-card">
+      <div class="synth-header">
+        <div>
+          <h2>Synth B</h2>
+        </div>
+        <div>
+          <label for="synth-list"><h3>Synth Type:</h3></label>
+          <select name="synth-list" id="synth-list-3b">
+            <option>AM Synth</option>
+            <option>FM Synth</option>
+            <option>Mono Synth</option>
+            <option>Simple Synth</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-panel">
+        <div class="control-mod">
+          <h3>Volume B(decibels)</h3>
+          <div class="slider" id="slider-v-3b">
+            <div id="vol-hand-3b" class="v-sli sli-han ui-slider-handle"></div>
+          </div>
+        </div>
+        <div class="control-mod">
+          <h3>Equalizer B(Low-Mid-High)</h3>
+          <div class="eq-fader">
+            <div id="slider-eq-low-3b">
+              <div
+                id="hand-eq-l-3b"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+            <div id="slider-eq-mid-3b">
+              <div
+                id="hand-eq-m-3b"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+            <div id="slider-eq-high-3b">
+              <div
+                id="hand-eq-h-3b"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{! <div>
+  <form id="reservation">
+    <label for="pitch"><h3>Pitch</h3></label>
+    <!-- ChatGPT helped generate this list of options, helping me to avoid needless tedium -->
+    <select name="pitch" id="pitch">
+      <option>A0</option>
+      <option>A#0</option>
+      <option>B0</option>
+      <option>C1</option>
+      <option>C#1</option>
+      <option>D1</option>
+      <option>D#1</option>
+      <option>E1</option>
+      <option>F1</option>
+      <option>F#1</option>
+      <option>G1</option>
+      <option>G#1</option>
+      <option>A1</option>
+      <option>A#1</option>
+      <option>B1</option>
+      <option>C2</option>
+      <option>C#2</option>
+      <option>D2</option>
+      <option>D#2</option>
+      <option>E2</option>
+      <option>F2</option>
+      <option>F#2</option>
+      <option>G2</option>
+      <option>G#2</option>
+      <option>A2</option>
+      <option>A#2</option>
+      <option>B2</option>
+      <option>C3</option>
+      <option>C#3</option>
+      <option>D3</option>
+      <option>D#3</option>
+      <option>E3</option>
+      <option>F3</option>
+      <option>F#3</option>
+      <option>G3</option>
+      <option>G#3</option>
+      <option>A3</option>
+      <option>A#3</option>
+      <option>B3</option>
+      <option>C4</option>
+      <option>C#4</option>
+      <option>D4</option>
+      <option>D#4</option>
+      <option>E4</option>
+      <option>F4</option>
+      <option>F#4</option>
+      <option>G4</option>
+      <option>G#4</option>
+      <option>A4</option>
+      <option>A#4</option>
+      <option>B4</option>
+      <option>C5</option>
+      <option>C#5</option>
+      <option>D5</option>
+      <option>D#5</option>
+      <option>E5</option>
+      <option>F5</option>
+      <option>F#5</option>
+      <option>G5</option>
+      <option>G#5</option>
+      <option>A5</option>
+      <option>A#5</option>
+      <option>B5</option>
+      <option>C6</option>
+      <option>C#6</option>
+      <option>D6</option>
+      <option>D#6</option>
+      <option>E6</option>
+      <option>F6</option>
+      <option>F#6</option>
+      <option>G6</option>
+      <option>G#6</option>
+      <option>A6</option>
+      <option>A#6</option>
+      <option>B6</option>
+      <option>C7</option>
+      <option>C#7</option>
+      <option>D7</option>
+      <option>D#7</option>
+      <option>E7</option>
+      <option>F7</option>
+      <option>F#7</option>
+      <option>G7</option>
+      <option>G#7</option>
+      <option>A7</option>
+      <option>A#7</option>
+      <option>B7</option>
+      <option>C8</option>
+    </select>
+  </form>
+</div> }}
+  {{!<div>
+  <h3>Duration (milliseconds)</h3>
+  <div id="slider-d">
+    <div id="custom-handle-2" class="ui-slider-handle"></div>
+  </div>
+</div> }}
+  <div class="kbrd-map">
+    <img id="key-map" src="assets/images/audiokeys-mapping-rows1.jpg" />
+  </div>
+</div>
