@@ -73,3 +73,24 @@ export const sliderHigh3A = $("#slider-eq-high-3a");
 export const sliderLow3B = $("#slider-eq-low-3b");
 export const sliderMid3B = $("#slider-eq-mid-3b");
 export const sliderHigh3B = $("#slider-eq-high-3b");
+
+export const synthList3C = $("#synth-list-3c");
+export const curPitch3CEl = $("#cur-pitch-3C");
+export const curFreq3CEl = $("#cur-freq-3C");
+export const curVol3CEl = $("#cur-vol-3C");
+export const volSlider3C = $("#slider-v-3c");
+export const volHandle3C = $("#vol-hand-3c");
+export const handleLow3C = $("#hand-eq-l-3c");
+export const handleMid3C = $("#hand-eq-m-3c");
+export const handleHigh3C = $("#hand-eq-h-3c");
+export const sliderLow3C = $("#slider-eq-low-3c");
+export const sliderMid3C = $("#slider-eq-mid-3c");
+export const sliderHigh3C = $("#slider-eq-high-3c");
+
+export const curIntEl2 = $("#cur-int-2");
+export const curIntAbbrEl2 = $("#cur-int-abbr-2");
+export const curIntHsEl2 = $("#cur-int-hs-2");
+
+export const triadName = $("#triad-name");
+export const triadInts = $("#triad-ints");
+export const triadRoot = $("#triad-root");

@@ -63,6 +63,21 @@ import {
   sliderLow3B,
   sliderMid3B,
   sliderHigh3B,
+  synthList3C,
+  curPitch3CEl,
+  curFreq3CEl,
+  curVol3CEl,
+  volSlider3C,
+  volHandle3C,
+  handleHigh3C,
+  handleLow3C,
+  handleMid3C,
+  sliderLow3C,
+  sliderMid3C,
+  sliderHigh3C,
+  triadName,
+  triadInts,
+  triadRoot,
 } from "./dom.js";
 // instruments up here
 const vol = new Tone.Volume(0).toDestination();
@@ -195,6 +210,33 @@ const intArr = [
   { value: 24, name: "Minor 2nd", abbr: "m2" },
 ];
 
+const triadArr = [
+  {
+    name: "Major",
+    intervals: [4, 3],
+  },
+  {
+    name: "Minor",
+    intervals: [3, 4],
+  },
+  {
+    name: "Suspended Second",
+    intervals: [2, 5],
+  },
+  {
+    name: "Suspended Fourth",
+    intervals: [5, 2],
+  },
+  {
+    name: "Diminished",
+    intervals: [3, 3],
+  },
+  {
+    name: "Augmented",
+    intervals: [4, 4],
+  },
+];
+
 export default class Hi {
   constructor(
     curNoteVal,
@@ -312,6 +354,7 @@ export default class Hi {
       freq: pitchName[0].frequency,
       pitch: pitchName[0].pitch,
       enharm: pitchName[0].enharmonic,
+      value: pitchName[0].value,
     };
   }
   async attackSynthNum(synthNum, key) {
@@ -325,7 +368,7 @@ export default class Hi {
     synthNum.dispose();
   }
   // need to create logic for inverted intervals
-  displayInt(freq1, freq2) {
+  displayInt(freq1, freq2, intEl, intAbbrEl, intHsEl) {
     var note1 = this.matchNoteFreq(freq1);
     var note2 = this.matchNoteFreq(freq2);
     var intFactor = note2.value - note1.value;
@@ -342,10 +385,33 @@ export default class Hi {
         intHs = int.value;
       }
     });
-    // can still add element with abbr...
-    curIntEl.text(intName);
-    curIntAbbrEl.text(intAbbr);
-    curIntHsEl.text(intHs);
-    return;
+    intEl.text(intName);
+    intAbbrEl.text(intAbbr);
+    intHsEl.text(intHs);
+    return intFactor;
+  }
+
+  async triadAnalyzer(notesArr) {
+    const noteVals = notesArr.map((note) => note.value);
+    let thisIntArr = [];
+    for (var i = 0; i < noteVals.length - 1; i++) {
+      const newInt = noteVals[i + 1] - noteVals[i];
+      thisIntArr.push(newInt);
+    }
+    var foundIt = null;
+    for (var i = 0; i < triadArr.length || foundIt; i++) {
+      if (triadArr[i].intervals[0] === thisIntArr[0]) {
+        if (triadArr[i].intervals[1] === thisIntArr[1]) {
+          foundIt = triadArr[i].name;
+          triadName.text(foundIt);
+          return;
+        }
+      }
+    }
+  }
+
+  orderNotes(array) {
+    array.sort((a, b) => a.value - b.value);
+    return array;
   }
 }
