@@ -312,7 +312,6 @@ export default class Hi {
   }
   // will need to alter p1 to adapt to these flexible parameters
   volSlide(event, ui, handle, vol) {
-    console.log(handle);
     handle.text(ui.value);
     vol.volume.value = ui.value;
     this.curVolVal = ui.value;
