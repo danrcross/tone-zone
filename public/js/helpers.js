@@ -5,6 +5,9 @@ import {
   curDurEl,
   curFreqEl,
   curVolEl,
+  curIntEl,
+  curIntAbbrEl,
+  curIntHsEl,
   notesList,
   playbtn,
   sliderP,
@@ -12,6 +15,69 @@ import {
   handleLow,
   handleMid,
   handleHigh,
+  synthList2A,
+  curPitch2AEl,
+  curFreq2AEl,
+  curVol2AEl,
+  synthList2B,
+  curPitch2BEl,
+  curFreq2BEl,
+  curVol2BEl,
+  volSlider2A,
+  volSlider2B,
+  volHandle2A,
+  volHandle2B,
+  handleHigh2A,
+  handleHigh2B,
+  handleLow2A,
+  handleLow2B,
+  handleMid2A,
+  handleMid2B,
+  sliderLow2A,
+  sliderMid2A,
+  sliderHigh2A,
+  sliderLow2B,
+  sliderMid2B,
+  sliderHigh2B,
+  synthList3A,
+  curPitch3AEl,
+  curFreq3AEl,
+  curVol3AEl,
+  synthList3B,
+  curPitch3BEl,
+  curFreq3BEl,
+  curVol3BEl,
+  volSlider3A,
+  volSlider3B,
+  volHandle3A,
+  volHandle3B,
+  handleHigh3A,
+  handleHigh3B,
+  handleLow3A,
+  handleLow3B,
+  handleMid3A,
+  handleMid3B,
+  sliderLow3A,
+  sliderMid3A,
+  sliderHigh3A,
+  sliderLow3B,
+  sliderMid3B,
+  sliderHigh3B,
+  synthList3C,
+  curPitch3CEl,
+  curFreq3CEl,
+  curVol3CEl,
+  volSlider3C,
+  volHandle3C,
+  handleHigh3C,
+  handleLow3C,
+  handleMid3C,
+  sliderLow3C,
+  sliderMid3C,
+  sliderHigh3C,
+  triadName,
+  triadInts,
+  triadRoot,
 } from "./dom.js";
 // instruments up here
 const vol = new Tone.Volume(0).toDestination();
@@ -19,8 +85,6 @@ const eq = new Tone.EQ3(0, 0, 0).connect(vol);
 var synth = new Tone.AMSynth().connect(eq);
 
 if (window.location.pathname === "/2") {
-  var synth2 = new Tone.AMSynth().toDestination();
-  var synth3 = new Tone.AMSynth().toDestination();
 }
 
 // ChatGPT created this long array for me! would have been needlessly tedious otherwise.
@@ -115,6 +179,64 @@ const notesArr = [
   { frequency: 4186.01, pitch: "C8", enharmonic: null, value: 88 },
 ];
 
+const intArr = [
+  {
+    value: 0,
+    name: "unison",
+  },
+  { value: 1, name: "Minor 2nd", abbr: "m2" },
+  { value: 2, name: "Major 2nd", abbr: "M2" },
+  { value: 3, name: "Minor 3rd", abbr: "m3" },
+  { value: 4, name: "Major 3rd", abbr: "M3" },
+  { value: 5, name: "Perfect 4th", abbr: "P4" },
+  { value: 6, name: "Tritone/Augmented 4th/Diminished 5th", abbr: "A4/d5" },
+  { value: 7, name: "Perfect 5th", abbr: "P5" },
+  { value: 8, name: "Minor 6th", abbr: "m6" },
+  { value: 9, name: "Major 6th", abbr: "M6" },
+  { value: 10, name: "Minor 7th", abbr: "m7" },
+  { value: 11, name: "Major 7th", abbr: "M7" },
+  { value: 12, name: "Octave", abbr: "8ve" },
+  { value: 13, name: "Minor 2nd", abbr: "m2" },
+  { value: 14, name: "Minor 2nd", abbr: "m2" },
+  { value: 15, name: "Minor 2nd", abbr: "m2" },
+  { value: 16, name: "Minor 2nd", abbr: "m2" },
+  { value: 17, name: "Minor 2nd", abbr: "m2" },
+  { value: 18, name: "Minor 2nd", abbr: "m2" },
+  { value: 19, name: "Minor 2nd", abbr: "m2" },
+  { value: 20, name: "Minor 2nd", abbr: "m2" },
+  { value: 21, name: "Minor 2nd", abbr: "m2" },
+  { value: 22, name: "Minor 2nd", abbr: "m2" },
+  { value: 23, name: "Minor 2nd", abbr: "m2" },
+  { value: 24, name: "Minor 2nd", abbr: "m2" },
+];
+
+const triadArr = [
+  {
+    name: "Major",
+    intervals: [4, 3],
+  },
+  {
+    name: "Minor",
+    intervals: [3, 4],
+  },
+  {
+    name: "Suspended Second",
+    intervals: [2, 5],
+  },
+  {
+    name: "Suspended Fourth",
+    intervals: [5, 2],
+  },
+  {
+    name: "Diminished",
+    intervals: [3, 3],
+  },
+  {
+    name: "Augmented",
+    intervals: [4, 4],
+  },
+];
+
 export default class Hi {
   constructor(
     curNoteVal,
@@ -132,19 +254,21 @@ export default class Hi {
     this.curHighVal = curHighVal;
   }
   matchNote(noteVal) {
-    return notesArr.filter((note) => {
-      if (noteVal === note.pitch) {
-        return note;
-      }
-    });
+    const newArr = notesArr.filter((note) => noteVal === note.pitch);
+    return newArr;
   }
-
-  dispNote(ddNoteVal, freqName, dbLv) {
-    curPitchEl.text(ddNoteVal);
-    curFreqEl.text(freqName[0].frequency + " Hz");
-    curVolEl.text(this.curVolVal + " db");
-    var curDurNota = Tone.Time(this.curDurVal).toNotation();
-    curDurEl.text(this.curDurVal * 1000 + " ms, " + curDurNota);
+  matchNoteFreq(freqVal) {
+    const newArr = notesArr.filter((note) => freqVal === note.frequency);
+    return newArr[0];
+  }
+  // temporarily disabled duration display, as it is not used on p2
+  dispNote(ddNoteVal, freqName, pitchEl, freqEl, volEl, dbLv) {
+    pitchEl.text(ddNoteVal);
+    // the acquisition of freqName will need to be altered for p1
+    freqEl.text(freqName + " Hz");
+    volEl.text(this.curVolVal + " db");
+    // var curDurNota = Tone.Time(this.curDurVal).toNotation();
+    // curDurEl.text(this.curDurVal * 1000 + " ms, " + curDurNota);
   }
 
   playNDisplay() {
@@ -155,29 +279,29 @@ export default class Hi {
     synth.triggerAttackRelease(ddNoteVal, this.curDurVal);
   }
   // handles user synth selection from dropdown
-  switchSynth() {
+  async switchSynth(aSynthList, aSynth, aEQ) {
     // when a change occurs (new item selected), the selected value is stored in 'curSynth'
-    var curSynth = synthList.val();
+    var curSynth = aSynthList.val();
     // different cases obtain depending on user selection.
     // each case will disconnect old synth and instantiate the new one.
+    if (aSynth) {
+      aSynth.disconnect();
+    }
     switch (curSynth) {
       case "AM Synth":
-        synth.disconnect();
-        synth = new Tone.AMSynth().connect(eq);
+        aSynth = new Tone.AMSynth().connect(aEQ);
         break;
       case "FM Synth":
-        synth.disconnect();
-        synth = new Tone.FMSynth().connect(eq);
+        aSynth = new Tone.FMSynth().connect(aEQ);
         break;
       case "Mono Synth":
-        synth.disconnect();
-        synth = new Tone.MonoSynth().connect(eq);
+        aSynth = new Tone.MonoSynth().connect(aEQ);
         break;
       case "Simple Synth":
-        synth.disconnect();
-        synth = new Tone.Synth().connect(eq);
+        aSynth = new Tone.Synth().connect(aEQ);
         break;
     }
+    return aSynth;
   }
 
   pitchSlide(event, ui) {
@@ -186,15 +310,15 @@ export default class Hi {
     this.playNDisplay();
     notesList[0].selectedIndex = ui.value - 1;
   }
-
-  volSlide(event, ui) {
+  // will need to alter p1 to adapt to these flexible parameters
+  volSlide(event, ui, handle, vol) {
     handle.text(ui.value);
     vol.volume.value = ui.value;
     this.curVolVal = ui.value;
   }
 
-  eqSlide(ui, band, handle) {
-    eq[band].value = ui.value;
+  eqSlide(ui, band, handle, anEq) {
+    anEq[band].value = ui.value;
     handle.text(ui.value);
   }
   keyHandler(key) {
@@ -225,28 +349,68 @@ export default class Hi {
         return;
       });
     }
-    return pitchName[0].frequency;
+    return {
+      freq: pitchName[0].frequency,
+      pitch: pitchName[0].pitch,
+      enharm: pitchName[0].enharmonic,
+      value: pitchName[0].value,
+    };
   }
-  async attackSynth2(key) {
+  async attackSynthNum(synthNum, key) {
     var note = await this.getKeyNote(key);
-    await synth2.triggerAttack(note);
+    await synthNum.triggerAttack(note.freq);
   }
-  releaseSynth2(key) {
-    synth2.triggerRelease();
+  releaseSynthNum(synthNum, key) {
+    synthNum.triggerRelease();
   }
-  unplugSynth2() {
-    synth2.dispose();
+  unplugSynthNum(synthNum) {
+    synthNum.dispose();
   }
-  async attackSynth3(key) {
-    var note = await this.getKeyNote(key);
-    await synth3.triggerAttack(note);
+  // need to create logic for inverted intervals
+  displayInt(freq1, freq2, intEl, intAbbrEl, intHsEl) {
+    var note1 = this.matchNoteFreq(freq1);
+    var note2 = this.matchNoteFreq(freq2);
+    var intFactor = note2.value - note1.value;
+    if (intFactor < 0) {
+      intFactor = intFactor * -1;
+    }
+    var intName;
+    var intAbbr;
+    var intHs;
+    intArr.forEach((int) => {
+      if (int.value === intFactor) {
+        intName = int.name;
+        intAbbr = int.abbr;
+        intHs = int.value;
+      }
+    });
+    intEl.text(intName);
+    intAbbrEl.text(intAbbr);
+    intHsEl.text(intHs);
+    return intFactor;
   }
-  releaseSynth3(key) {
-    synth3.triggerRelease();
+
+  async triadAnalyzer(notesArr) {
+    const noteVals = notesArr.map((note) => note.value);
+    let thisIntArr = [];
+    for (var i = 0; i < noteVals.length - 1; i++) {
+      const newInt = noteVals[i + 1] - noteVals[i];
+      thisIntArr.push(newInt);
+    }
+    var foundIt = null;
+    for (var i = 0; i < triadArr.length || foundIt; i++) {
+      if (triadArr[i].intervals[0] === thisIntArr[0]) {
+        if (triadArr[i].intervals[1] === thisIntArr[1]) {
+          foundIt = triadArr[i].name;
+          triadName.text(foundIt);
+          return;
+        }
+      }
+    }
   }
-  unplugSynth3() {
-    synth3.dispose();
+
+  orderNotes(array) {
+    array.sort((a, b) => a.value - b.value);
+    return array;
   }
 }
-
-console.log(synth2);

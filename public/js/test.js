@@ -1,0 +1,7 @@
+  synthList3C,
+  curPitch3CEl,
+  curFreq3CEl,
+  curVol3CEl,
+  volSlider3C,  volHandle3C,  handleHigh3C,  handleLow3C,  handleMid3C, sliderLow3C,
+  sliderMid3C,
+  sliderHigh3C,
