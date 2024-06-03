@@ -5,7 +5,7 @@ const exphbs = require("express-handlebars");
 const routes = require("./controllers");
 
 const app = express();
-const PORT = 3001 || process.env.PORT;
+const PORT = process.env.PORT || 3001;
 
 // const hbs = exphbs.create({ helpers });
 const hbs = exphbs.create();
