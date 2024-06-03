@@ -1,6 +1,173 @@
 <div class="p3-container">
+  <div id="sy-tog-cntr">
+    <button class="ctrl-toggle">Open Synth Controls</button>
+  </div>
+  <div class="synth-rack">
+    <div class="synth-card a">
+      <div class="synth-header">
+        <div>
+          <h2>Synth A</h2>
+        </div>
+        <div>
+          <label for="synth-list"><h3>Synth Type:</h3></label>
+          <select class="synth-dd" name="synth-list" id="synth-list-3a">
+            <div class="opt-div">
+              <option>AM Synth</option>
+              <option>FM Synth</option>
+              <option>Mono Synth</option>
+              <option>Simple Synth</option>
+            </div>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-panel">
+        <div class="mod-container">
+          <div class="control-mod">
+            <h3>Volume A(decibels)</h3>
+            <div class="slider" id="slider-v-3a">
+              <div
+                id="vol-hand-3a"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+          </div>
+          <div class="control-mod">
+            <h3>Equalizer A(Low-Mid-High)</h3>
+            <div class="eq-fader">
+              <div class="slider" id="slider-eq-low-3a">
+                <div
+                  id="hand-eq-l-3a"
+                  class="v-sli sli-han ui-slider-handle"
+                ></div>
+              </div>
+              <div class="slider" id="slider-eq-mid-3a">
+                <div
+                  id="hand-eq-m-3a"
+                  class="v-sli sli-han ui-slider-handle"
+                ></div>
+              </div>
+              <div class="slider" id="slider-eq-high-3a">
+                <div
+                  id="hand-eq-h-3a"
+                  class="v-sli sli-han ui-slider-handle"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="synth-card b">
+      <div class="synth-header">
+        <div>
+          <h2>Synth B</h2>
+        </div>
+        <div>
+          <label for="synth-list"><h3>Synth Type:</h3></label>
+          <select class="synth-dd" name="synth-list" id="synth-list-3b">
+            <option>AM Synth</option>
+            <option>FM Synth</option>
+            <option>Mono Synth</option>
+            <option>Simple Synth</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-panel">
+        <div class="mod-container">
+          <div class="control-mod">
+            <h3>Volume B(decibels)</h3>
+            <div class="slider" id="slider-v-3b">
+              <div
+                id="vol-hand-3b"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+          </div>
+          <div class="control-mod">
+            <h3>Equalizer B(Low-Mid-High)</h3>
+            <div class="eq-fader">
+              <div class="slider" id="slider-eq-low-3b">
+                <div
+                  id="hand-eq-l-3b"
+                  class="v-sli sli-han ui-slider-handle"
+                ></div>
+              </div>
+              <div class="slider" id="slider-eq-mid-3b">
+                <div
+                  id="hand-eq-m-3b"
+                  class="v-sli sli-han ui-slider-handle"
+                ></div>
+              </div>
+              <div class="slider" id="slider-eq-high-3b">
+                <div
+                  id="hand-eq-h-3b"
+                  class="v-sli sli-han ui-slider-handle"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="synth-card c">
+      <div class="synth-header">
+        <div>
+          <h2>Synth C</h2>
+        </div>
+        <div>
+          <label for="synth-list"><h3>Synth Type:</h3></label>
+          <select class="synth-dd" name="synth-list" id="synth-list-3c">
+            <option>AM Synth</option>
+            <option>FM Synth</option>
+            <option>Mono Synth</option>
+            <option>Simple Synth</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-panel">
+        <div class="mod-container">
+          <div class="control-mod">
+            <h3>Volume B(decibels)</h3>
+            <div class="slider" id="slider-v-3c">
+              <div
+                id="vol-hand-3c"
+                class="v-sli sli-han ui-slider-handle"
+              ></div>
+            </div>
+          </div>
+          <div class="control-mod">
+            <h3>Equalizer B(Low-Mid-High)</h3>
+            <div class="eq-fader">
+              <div class="slider" id="slider-eq-low-3c">
+                <div
+                  id="hand-eq-l-3c"
+                  class="v-sli sli-han ui-slider-handle"
+                ></div>
+              </div>
+              <div class="slider" id="slider-eq-mid-3c">
+                <div
+                  id="hand-eq-m-3c"
+                  class="v-sli sli-han ui-slider-handle"
+                ></div>
+              </div>
+              <div class="slider" id="slider-eq-high-3c">
+                <div
+                  id="hand-eq-h-3c"
+                  class="v-sli sli-han ui-slider-handle"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="disp-container">
-    <div class="disp-card">
+    <div class="disp-card a">
       <h2>Synth A</h2>
       <div class="info">
         <div class="info-key">
@@ -15,7 +182,41 @@
         </div>
       </div>
     </div>
-    <div class="disp-card">
+
+    <div class="disp-card b">
+      <h2>Synth B</h2>
+      <div class="info">
+        <div class="info-key">
+          <h3>Pitch </h3>
+          <h3>Frequency </h3>
+          <h3>Volume </h3>
+        </div>
+        <div class="info-val">
+          <span id="cur-pitch-3B"></span>
+          <span id="cur-freq-3B"></span>
+          <span id="cur-vol-3B"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="disp-card c">
+      <h2>Synth C</h2>
+      <div class="info">
+        <div class="info-key">
+          <h3>Pitch </h3>
+          <h3>Frequency </h3>
+          <h3>Volume </h3>
+        </div>
+        <div class="info-val">
+          <span id="cur-pitch-3C"></span>
+          <span id="cur-freq-3C"></span>
+          <span id="cur-vol-3C"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="int-disp-row">
+    <div class="disp-card ab">
       <h2>Harmonic Interval #1</h2>
       <div class="info-row">
         <div class="info-col">
@@ -32,22 +233,7 @@
         </div>
       </div>
     </div>
-    <div class="disp-card">
-      <h2>Synth B</h2>
-      <div class="info">
-        <div class="info-key">
-          <h3>Pitch </h3>
-          <h3>Frequency </h3>
-          <h3>Volume </h3>
-        </div>
-        <div class="info-val">
-          <span id="cur-pitch-3B"></span>
-          <span id="cur-freq-3B"></span>
-          <span id="cur-vol-3B"></span>
-        </div>
-      </div>
-    </div>
-    <div class="disp-card">
+    <div class="disp-card bc">
       <h2>Harmonic Interval #2</h2>
       <div class="info-row">
         <div class="info-col">
@@ -64,188 +250,48 @@
         </div>
       </div>
     </div>
-    <div class="disp-card">
-      <h2>Synth C</h2>
-      <div class="info">
-        <div class="info-key">
-          <h3>Pitch </h3>
-          <h3>Frequency </h3>
-          <h3>Volume </h3>
+  </div>
+  <div class="chord-disp-row">
+    <div class="disp-card abc">
+      <h2>Chord</h2>
+      <div class="info-row">
+        <div class="info-col">
+          <h3>Root</h3>
+          <span id="triad-root"></span>
         </div>
-        <div class="info-val">
-          <span id="cur-pitch-3C"></span>
-          <span id="cur-freq-3C"></span>
-          <span id="cur-vol-3C"></span>
+        <div class="info-col">
+          <h3>Name </h3>
+          <span id="triad-name"></span>
+        </div>
+        <div class="info-col">
+          <h3>Inversion </h3>
+          <span id="triad-inv" class="unruly-abbr"></span>
+        </div>
+      </div>
+    </div>
+    <div id="alt-chord" class="disp-card abc-2" style="display:none">
+      <h2>Alternative Chord</h2>
+      <div class="info-row">
+        <div class="info-col">
+          <h3>Root</h3>
+          <span id="triad-root-2"></span>
+        </div>
+        <div class="info-col">
+          <h3>Name </h3>
+          <span id="triad-name-2"></span>
+        </div>
+        <div class="info-col">
+          <h3>Inversion </h3>
+          <span id="triad-inv-2" class="unruly-abbr"></span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="disp-card">
-    <h2>Chord</h2>
-    <div class="info-row">
-      <div class="info-col">
-        <h3>Name </h3>
-        <span id="triad-name"></span>
-      </div>
-      <div class="info-col">
-        <h3>Intervals </h3>
-        <span id="triad-ints" class="unruly-abbr"></span>
-      </div>
-      <div class="info-col">
-        <h3>Root</h3>
-        <span id="triad-root"></span>
-      </div>
-    </div>
-  </div>
-
-  <div class="synth-rack">
-    <div class="synth-card">
-      <div class="synth-header">
-        <div>
-          <h2>Synth A</h2>
-        </div>
-        <div>
-          <label for="synth-list"><h3>Synth Type:</h3></label>
-          <select name="synth-list" id="synth-list-3a">
-            <option>AM Synth</option>
-            <option>FM Synth</option>
-            <option>Mono Synth</option>
-            <option>Simple Synth</option>
-          </select>
-        </div>
-      </div>
-      <div class="control-panel">
-        <div class="control-mod">
-          <h3>Volume A(decibels)</h3>
-          <div class="slider" id="slider-v-3a">
-            <div id="vol-hand-3a" class="v-sli sli-han ui-slider-handle"></div>
-          </div>
-        </div>
-        <div class="control-mod">
-          <h3>Equalizer A(Low-Mid-High)</h3>
-          <div class="eq-fader">
-            <div id="slider-eq-low-3a">
-              <div
-                id="hand-eq-l-3a"
-                class="v-sli sli-han ui-slider-handle"
-              ></div>
-            </div>
-            <div id="slider-eq-mid-3a">
-              <div
-                id="hand-eq-m-3a"
-                class="v-sli sli-han ui-slider-handle"
-              ></div>
-            </div>
-            <div id="slider-eq-high-3a">
-              <div
-                id="hand-eq-h-3a"
-                class="v-sli sli-han ui-slider-handle"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="synth-card">
-      <div class="synth-header">
-        <div>
-          <h2>Synth B</h2>
-        </div>
-        <div>
-          <label for="synth-list"><h3>Synth Type:</h3></label>
-          <select name="synth-list" id="synth-list-3b">
-            <option>AM Synth</option>
-            <option>FM Synth</option>
-            <option>Mono Synth</option>
-            <option>Simple Synth</option>
-          </select>
-        </div>
-      </div>
-      <div class="control-panel">
-        <div class="control-mod">
-          <h3>Volume B(decibels)</h3>
-          <div class="slider" id="slider-v-3b">
-            <div id="vol-hand-3b" class="v-sli sli-han ui-slider-handle"></div>
-          </div>
-        </div>
-        <div class="control-mod">
-          <h3>Equalizer B(Low-Mid-High)</h3>
-          <div class="eq-fader">
-            <div id="slider-eq-low-3b">
-              <div
-                id="hand-eq-l-3b"
-                class="v-sli sli-han ui-slider-handle"
-              ></div>
-            </div>
-            <div id="slider-eq-mid-3b">
-              <div
-                id="hand-eq-m-3b"
-                class="v-sli sli-han ui-slider-handle"
-              ></div>
-            </div>
-            <div id="slider-eq-high-3b">
-              <div
-                id="hand-eq-h-3b"
-                class="v-sli sli-han ui-slider-handle"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="synth-card">
-      <div class="synth-header">
-        <div>
-          <h2>Synth C</h2>
-        </div>
-        <div>
-          <label for="synth-list"><h3>Synth Type:</h3></label>
-          <select name="synth-list" id="synth-list-3c">
-            <option>AM Synth</option>
-            <option>FM Synth</option>
-            <option>Mono Synth</option>
-            <option>Simple Synth</option>
-          </select>
-        </div>
-      </div>
-      <div class="control-panel">
-        <div class="control-mod">
-          <h3>Volume B(decibels)</h3>
-          <div class="slider" id="slider-v-3c">
-            <div id="vol-hand-3c" class="v-sli sli-han ui-slider-handle"></div>
-          </div>
-        </div>
-        <div class="control-mod">
-          <h3>Equalizer B(Low-Mid-High)</h3>
-          <div class="eq-fader">
-            <div id="slider-eq-low-3c">
-              <div
-                id="hand-eq-l-3c"
-                class="v-sli sli-han ui-slider-handle"
-              ></div>
-            </div>
-            <div id="slider-eq-mid-3c">
-              <div
-                id="hand-eq-m-3c"
-                class="v-sli sli-han ui-slider-handle"
-              ></div>
-            </div>
-            <div id="slider-eq-high-3c">
-              <div
-                id="hand-eq-h-3c"
-                class="v-sli sli-han ui-slider-handle"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
+  <div id="im-tog-div"><button id="img-tog">Change Keyboard Setup</button></div>
+  <div id="show-img-div"><button id="img-disp-tog">Show Keyboard Map</button></div>
   <div class="kbrd-map">
+
     <img id="key-map" src="assets/images/audiokeys-mapping-rows1.jpg" />
   </div>
 </div>
