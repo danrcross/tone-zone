@@ -76,8 +76,13 @@ import {
   sliderMid3C,
   sliderHigh3C,
   triadName,
-  triadInts,
+  triadInv,
   triadRoot,
+  altChordDisp,
+  triadName2,
+  triadInv2,
+  triadRoot2,
+  ctrlToggle,
 } from "./dom.js";
 // instruments up here
 const vol = new Tone.Volume(0).toDestination();
@@ -210,30 +215,146 @@ const intArr = [
   { value: 24, name: "Minor 2nd", abbr: "m2" },
 ];
 
-const triadArr = [
+const triNoteArr = [
   {
     name: "Major",
     intervals: [4, 3],
+    inversion: "Root",
   },
   {
     name: "Minor",
     intervals: [3, 4],
+    inversion: "Root",
   },
   {
     name: "Suspended Second",
     intervals: [2, 5],
+    inversion: "Root",
   },
   {
     name: "Suspended Fourth",
     intervals: [5, 2],
+    inversion: "Root",
   },
   {
     name: "Diminished",
     intervals: [3, 3],
+    inversion: "Root",
   },
   {
     name: "Augmented",
     intervals: [4, 4],
+    inversion: "Root",
+  },
+  {
+    name: "Major",
+    intervals: [3, 5],
+    inversion: "First",
+  },
+  {
+    name: "Minor",
+    intervals: [4, 5],
+    inversion: "First",
+  },
+  {
+    name: "Suspended Second",
+    intervals: [5, 5],
+    inversion: "First",
+  },
+  {
+    name: "Suspended Fourth",
+    intervals: [2, 5],
+    inversion: "First",
+  },
+  {
+    name: "Diminished",
+    intervals: [3, 6],
+    inversion: "First",
+  },
+  {
+    name: "Major",
+    intervals: [5, 4],
+    inversion: "Second",
+  },
+  {
+    name: "Minor",
+    intervals: [5, 3],
+    inversion: "Second",
+  },
+  {
+    name: "Suspended Second",
+    intervals: [5, 2],
+    inversion: "Second",
+  },
+  {
+    name: "Suspended Fourth",
+    intervals: [5, 5],
+    inversion: "Second",
+  },
+  {
+    name: "Diminished",
+    intervals: [6, 3],
+    inversion: "Second",
+  },
+  {
+    name: "Major Seventh (no 5th)",
+    intervals: [4, 7],
+    inversion: "Root",
+  },
+  {
+    name: "Minor Seventh (no 5th)",
+    intervals: [3, 7],
+    inversion: "Root",
+  },
+  {
+    name: "Major Seventh (no 5th)",
+    intervals: [7, 1],
+    inversion: "First",
+  },
+  {
+    name: "Minor Seventh (no 5th)",
+    intervals: [7, 2],
+    inversion: "First",
+  },
+  {
+    name: "Major Seventh (no 5th)",
+    intervals: [1, 4],
+    inversion: "Third",
+  },
+  {
+    name: "Minor Seventh (no 5th)",
+    intervals: [2, 3],
+    inversion: "Third",
+  },
+  {
+    name: "Dominant Seventh (no 5th)",
+    intervals: [4, 6],
+    inversion: "Root",
+  },
+  {
+    name: "Dominant Seventh (no 5th)",
+    intervals: [6, 4],
+    inversion: "First",
+  },
+  {
+    name: "Dominant Seventh (no 5th)",
+    intervals: [2, 4],
+    inversion: "Third",
+  },
+  {
+    name: "Major add9 (no 5th)",
+    intervals: [4, 10],
+    inversion: "Root",
+  },
+  {
+    name: "Major add9 (no 5th)",
+    intervals: [10, 10],
+    inversion: "First",
+  },
+  {
+    name: "Major add9 (no 5th)",
+    intervals: [8, 2],
+    inversion: "Third",
   },
 ];
 
@@ -397,15 +518,89 @@ export default class Hi {
       const newInt = noteVals[i + 1] - noteVals[i];
       thisIntArr.push(newInt);
     }
-    var foundIt = null;
-    for (var i = 0; i < triadArr.length || foundIt; i++) {
-      if (triadArr[i].intervals[0] === thisIntArr[0]) {
-        if (triadArr[i].intervals[1] === thisIntArr[1]) {
-          foundIt = triadArr[i].name;
-          triadName.text(foundIt);
-          return;
+    var matches = triNoteArr.filter((match) => {
+      if (match.intervals[0] === thisIntArr[0]) {
+        if (match.intervals[1] === thisIntArr[1]) {
+          return match;
         }
       }
+    });
+
+    if (matches.length) {
+      triadName.text(matches[0].name);
+      triadInv.text(matches[0].inversion);
+      switch (matches[0].inversion) {
+        case "Root":
+          if (notesArr[0].pitch.length === 2) {
+            triadRoot.text(notesArr[0].pitch[0]);
+          } else {
+            triadRoot.text(notesArr[0].pitch[0] + notesArr[0].pitch[1]);
+          }
+          break;
+        case "First":
+          if (notesArr[2].pitch.length === 2) {
+            triadRoot.text(notesArr[2].pitch[0]);
+          } else {
+            triadRoot.text(notesArr[2].pitch[0] + notesArr[2].pitch[1]);
+          }
+          break;
+        case "Second":
+          if (notesArr[1].pitch.length === 2) {
+            triadRoot.text(notesArr[1].pitch[0]);
+          } else {
+            triadRoot.text(notesArr[1].pitch[0] + notesArr[1].pitch[1]);
+          }
+          break;
+        case "Third":
+          if (notesArr[1].pitch.length === 2) {
+            triadRoot.text(notesArr[1].pitch[0]);
+          } else {
+            triadRoot.text(notesArr[1].pitch[0] + notesArr[1].pitch[1]);
+          }
+          break;
+      }
+      if (matches.length > 1) {
+        altChordDisp.css({ display: "" });
+        triadName2.text(matches[1].name);
+        triadInv2.text(matches[1].inversion);
+        switch (matches[1].inversion) {
+          case "Root":
+            if (notesArr[0].pitch.length === 2) {
+              triadRoot2.text(notesArr[0].pitch[0]);
+            } else {
+              triadRoot2.text(notesArr[0].pitch[0] + notesArr[0].pitch[1]);
+            }
+            break;
+          case "First":
+            if (notesArr[2].pitch.length === 2) {
+              triadRoot2.text(notesArr[2].pitch[0]);
+            } else {
+              triadRoot2.text(notesArr[2].pitch[0] + notesArr[2].pitch[1]);
+            }
+            break;
+          case "Second":
+            if (notesArr[1].pitch.length === 2) {
+              triadRoot2.text(notesArr[1].pitch[0]);
+            } else {
+              triadRoot2.text(notesArr[1].pitch[0] + notesArr[1].pitch[1]);
+            }
+            break;
+          case "Third":
+            if (notesArr[1].pitch.length === 2) {
+              triadRoot2.text(notesArr[1].pitch[0]);
+            } else {
+              triadRoot2.text(notesArr[1].pitch[0] + notesArr[1].pitch[1]);
+            }
+            break;
+        }
+      } else {
+        altChordDisp.css({ display: "none" });
+      }
+    } else {
+      triadName.text("N/A");
+      triadInv.text("");
+      triadRoot.text("");
+      altChordDisp.css({ display: "none" });
     }
   }
 

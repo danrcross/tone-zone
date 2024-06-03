@@ -84,8 +84,18 @@ import {
   curIntAbbrEl2,
   curIntHsEl2,
   triadName,
-  triadInts,
+  triadInv,
   triadRoot,
+  altChordDisp,
+  triadName2,
+  triadInv2,
+  triadRoot2,
+  ctrlToggle,
+  ctrlPanel,
+  imgToggle,
+  imgDispToggle,
+  keyMapImg,
+  keyMapDiv,
 } from "./dom.js";
 
 // Add functionality to nav bar
@@ -142,7 +152,7 @@ switch (window.location.pathname) {
     // Create my keyboard controller
     const keyboard = new AudioKeys({
       rows: 1,
-      polyphony: 1,
+      polyphony: 1000,
     });
 
     // initialize pitch slider
@@ -257,6 +267,7 @@ switch (window.location.pathname) {
     var activeNotes = [];
     const keyboard2 = new AudioKeys({
       rows: 1,
+      polyphony: 1000,
     });
     // define behaviors of interactable elements on page;
 
@@ -415,7 +426,7 @@ switch (window.location.pathname) {
         if (activeNotes.length === 2) {
           var freq1 = activeNotes[0].freq;
           var freq2 = activeNotes[1].freq;
-          MyHi.displayInt(freq1, freq2);
+          MyHi.displayInt(freq1, freq2, curIntEl, curIntAbbrEl, curIntHsEl);
         }
         MyHi.attackSynthNum(synth2B, key);
         MyHi.dispNote(
@@ -465,6 +476,7 @@ switch (window.location.pathname) {
     var activeNotes = [];
     const keyboard3 = new AudioKeys({
       rows: 1,
+      polyphony: 1000,
     });
     var activeInts = [];
     // define behaviors of interactable elements on page;
@@ -487,6 +499,40 @@ switch (window.location.pathname) {
     });
     synthList3C.on("keydown", function (event) {
       event.preventDefault();
+    });
+    ctrlToggle.on("click", async function (event) {
+      const modContainers = $(".mod-container");
+      var dispStatus = modContainers.css("display");
+      console.log(dispStatus);
+      if (dispStatus !== "none") {
+        ctrlToggle.text("Open Synth Controls");
+        modContainers.css({ display: "none" });
+      } else if (dispStatus === "none") {
+        ctrlToggle.text("Close Synth Controls");
+        modContainers.css({ display: "flex", "flex-direction": "column" });
+      }
+    });
+
+    imgToggle.on("click", async function (event) {
+      var curSrc = keyMapImg.attr("src");
+      console.log();
+      if (curSrc === "assets/images/audiokeys-mapping-rows1.jpg") {
+        keyboard3._state.rows = 2;
+        keyMapImg.attr("src", "assets/images/audiokeys-2row.jpeg");
+      } else {
+        keyboard3._state.rows = 1;
+        keyMapImg.attr("src", "assets/images/audiokeys-mapping-rows1.jpg");
+      }
+    });
+
+    imgDispToggle.on("click", async function () {
+      if (keyMapDiv.css("display") === "none") {
+        imgDispToggle.text("Hide Keyboard Map");
+        keyMapDiv.css("display", "flex");
+      } else {
+        imgDispToggle.text("Show Keyboard Map");
+        keyMapDiv.css("display", "none");
+      }
     });
     // initialize sliders:
     volSlider3A.slider({
@@ -734,7 +780,7 @@ switch (window.location.pathname) {
           curFreq3CEl,
           curVol3CEl
         );
-      } else if (activeNotes.length === 3) {
+      } else if (activeNotes.length >= 3) {
         return;
       }
     });

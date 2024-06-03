@@ -92,5 +92,16 @@ export const curIntAbbrEl2 = $("#cur-int-abbr-2");
 export const curIntHsEl2 = $("#cur-int-hs-2");
 
 export const triadName = $("#triad-name");
-export const triadInts = $("#triad-ints");
+export const triadInv = $("#triad-inv");
 export const triadRoot = $("#triad-root");
+export const altChordDisp = $("#alt-chord");
+export const triadName2 = $("#triad-name-2");
+export const triadInv2 = $("#triad-inv-2");
+export const triadRoot2 = $("#triad-root-2");
+
+export const ctrlToggle = $(".ctrl-toggle");
+export const ctrlPanel = $(".control-panel");
+export const imgToggle = $("#img-tog");
+export const imgDispToggle = $("#img-disp-tog");
+export const keyMapImg = $("#key-map");
+export const keyMapDiv = $(".kbrd-map");
