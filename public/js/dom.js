@@ -105,3 +105,9 @@ export const imgToggle = $("#img-tog");
 export const imgDispToggle = $("#img-disp-tog");
 export const keyMapImg = $("#key-map");
 export const keyMapDiv = $(".kbrd-map");
+
+export const intCard1 = $(".disp-card.ab");
+export const intCard2 = $(".disp-card.bc");
+export const chordCard1 = $(".disp-card.abc");
+export const chordCard2 = $(".disp-card.abc-2");
+export const chordLabel = $("#cho-label");

@@ -83,6 +83,11 @@ import {
   triadInv2,
   triadRoot2,
   ctrlToggle,
+  intCard1,
+  intCard2,
+  chordCard1,
+  chordCard2,
+  chordLabel,
 } from "./dom.js";
 // instruments up here
 const vol = new Tone.Volume(0).toDestination();
@@ -384,6 +389,9 @@ export default class Hi {
   }
   // temporarily disabled duration display, as it is not used on p2
   dispNote(note, pitchEl) {
+    const label = pitchEl.closest(".disp-card").find("h2");
+    console.log(label);
+    label.text("");
     const parCard = pitchEl.closest(".disp-card");
     if (note !== "") {
       if (note.pitch.length === 2) {
@@ -404,7 +412,7 @@ export default class Hi {
           break;
       }
     } else {
-      console.log("here");
+      label.text("Note");
       pitchEl.text(note);
       parCard.css("background-color", "black");
     }
@@ -517,15 +525,63 @@ export default class Hi {
     synthNum.dispose();
   }
   // need to create logic for inverted intervals
-  displayInt(freq1, freq2, intAbbrEl, sortedNotes) {
-    const intCard = intAbbrEl.closest(".disp-card");
-    if (freq1 !== "" && freq2 !== "") {
-      var note1 = this.matchNoteFreq(freq1);
-      var note2 = this.matchNoteFreq(freq2);
-      var note1Synth = note1.synth;
-      var note2Synth = note2.synth;
-      console.log(note1Synth + " " + note2Synth);
-      var intFactor = note2.value - note1.value;
+  displayInt(note1, note2, intAbbrEl, cardNum) {
+    var label = cardNum.find("h2");
+    var note1;
+    var note2;
+    const red = `var(--lt-red)`;
+    const yel = `var(--lt-yel)`;
+    const blue = `var(--lt-blue)`;
+    const orng = `var(--lt-orng)`;
+    const grn = `var(--lt-grn)`;
+    const prpl = `var(--lt-prpl)`;
+    var color1;
+    var color2;
+    var midcolor;
+    if (note1 !== "" && note2 !== "") {
+      label.text("");
+      switch (note1.synth) {
+        case "3A":
+          color1 = red;
+          switch (note2.synth) {
+            case "3B":
+              color2 = yel;
+              midcolor = orng;
+              break;
+            case "3C":
+              color2 = blue;
+              midcolor = prpl;
+              break;
+          }
+          break;
+        case "3B":
+          color1 = yel;
+          switch (note2.synth) {
+            case "3A":
+              color2 = red;
+              midcolor = orng;
+              break;
+            case "3C":
+              color2 = blue;
+              midcolor = grn;
+              break;
+          }
+          break;
+        case "3C":
+          color1 = blue;
+          switch (note2.synth) {
+            case "3A":
+              color2 = red;
+              midcolor = prpl;
+              break;
+            case "3B":
+              color2 = yel;
+              midcolor = grn;
+              break;
+          }
+          break;
+      }
+      var intFactor = note1.value - note2.value;
       if (intFactor < 0) {
         intFactor = intFactor * -1;
       }
@@ -537,26 +593,66 @@ export default class Hi {
       });
       intAbbrEl.text(intAbbr);
 
-      intCard.css(
+      cardNum.css(
         "background-image",
-        `linear-gradient(
-to right,
-var(--lt-red) 0%,
-var(--lt-red) 20%,
- rgb(251, 201, 107) 20%,
-  rgb(251, 201, 107) 80%,
-  var(--lt-yel) 80%,
-   var(--lt-yel) 100%
-  )`
+        `linear-gradient(to right,${color1} 0%,${color1} 20%, ${midcolor} 20%,  ${midcolor} 80%,${color2} 80%,${color2} 100%  )`
       );
     } else {
+      label.text("Interval");
       intAbbrEl.text("");
+
+      cardNum.css("background-image", "");
     }
 
     return intFactor;
   }
 
   async triadAnalyzer(notesArr) {
+    chordLabel.text("");
+    const orng = `var(--lt-orng)`;
+    const grn = `var(--lt-grn)`;
+    const prpl = `var(--lt-prpl)`;
+    var color1;
+    var color2;
+    var synths = [];
+    notesArr.forEach((note) => {
+      synths.push(note.synth);
+    });
+    console.log(synths);
+    switch (synths[0]) {
+      case "3A":
+        if (synths[1] === "3B") {
+          color1 = orng;
+          color2 = grn;
+        } else {
+          color1 = prpl;
+          color2 = grn;
+        }
+        break;
+      case "3B":
+        if (synths[1] === "3A") {
+          color1 = orng;
+          color2 = prpl;
+        } else {
+          color1 = grn;
+          color2 = prpl;
+        }
+        break;
+      case "3C":
+        if (synths[1] === "3A") {
+          color1 = prpl;
+          color2 = orng;
+        } else {
+          color1 = grn;
+          color2 = orng;
+        }
+    }
+    chordCard1.css({
+      background: `linear-gradient(270deg, ${color1} , ${color2} )`,
+      "background-size": `400% 400%`,
+      animation: `AnimationName 2s ease infinite`,
+    });
+    console.log(notesArr[0]);
     const noteVals = notesArr.map((note) => note.value);
     let thisIntArr = [];
     for (var i = 0; i < noteVals.length - 1; i++) {

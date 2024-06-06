@@ -96,6 +96,11 @@ import {
   imgDispToggle,
   keyMapImg,
   keyMapDiv,
+  intCard1,
+  intCard2,
+  chordCard1,
+  chordCard2,
+  chordLabel,
 } from "./dom.js";
 
 // Add functionality to nav bar
@@ -706,13 +711,6 @@ switch (window.location.pathname) {
           value: keyData.value,
         };
         activeNotes.push(note);
-        if (activeNotes.length === 2) {
-          var sortedNotes = MyHi.orderNotes(activeNotes);
-          var freq1 = sortedNotes[0].freq;
-          var freq2 = sortedNotes[1].freq;
-          var int = MyHi.displayInt(freq1, freq2, curIntAbbrEl);
-          activeInts.push(int);
-        }
         MyHi.attackSynthNum(synth3B, key);
       } else if (activeNotes.length === 2) {
         // similar to above, but if a note is active, second synth will be activated
@@ -727,10 +725,6 @@ switch (window.location.pathname) {
         };
         activeNotes.push(note);
         // need to add another interval display
-        if (activeNotes.length === 3) {
-          var sortedNotes = MyHi.orderNotes(activeNotes);
-          MyHi.triadAnalyzer(sortedNotes);
-        }
         MyHi.attackSynthNum(synth3C, key);
       } else if (activeNotes.length >= 3) {
         return;
@@ -751,28 +745,38 @@ switch (window.location.pathname) {
           case 1:
             if (sortedNotes[i]) {
               MyHi.dispNote(note, curPitch3BEl);
-              var freq1 = sortedNotes[0].freq;
-              var freq2 = sortedNotes[1].freq;
-              var int = MyHi.displayInt(freq1, freq2, curIntAbbrEl);
+              var int = MyHi.displayInt(
+                sortedNotes[0],
+                sortedNotes[1],
+                curIntAbbrEl,
+                intCard1
+              );
               activeInts.push(int);
             } else {
               MyHi.dispNote("", curPitch3BEl);
-              MyHi.displayInt("", "", curIntAbbrEl);
+              var int = MyHi.displayInt("", "", curIntAbbrEl, intCard1);
             }
             break;
           case 2:
             if (sortedNotes[i]) {
               MyHi.dispNote(note, curPitch3CEl);
-              var freq2 = sortedNotes[1].freq;
-              var freq3 = sortedNotes[2].freq;
-              var int = MyHi.displayInt(freq2, freq3, curIntAbbrEl2);
+              var int = MyHi.displayInt(
+                sortedNotes[1],
+                sortedNotes[2],
+                curIntAbbrEl2,
+                intCard2
+              );
               activeInts.push(int);
             } else {
               MyHi.dispNote("", curPitch3CEl);
-              MyHi.displayInt("", "", curIntAbbrEl2);
+              MyHi.displayInt("", "", curIntAbbrEl2, intCard2);
             }
             break;
         }
+      }
+      if (activeNotes.length === 3) {
+        var sortedNotes = MyHi.orderNotes(activeNotes);
+        MyHi.triadAnalyzer(sortedNotes);
       }
     });
 
@@ -821,27 +825,37 @@ switch (window.location.pathname) {
           case 1:
             if (sortedNotes[i]) {
               MyHi.dispNote(note, curPitch3BEl);
-              var freq1 = sortedNotes[0].freq;
-              var freq2 = sortedNotes[1].freq;
-              MyHi.displayInt(freq1, freq2, curIntAbbrEl);
+              MyHi.displayInt(
+                sortedNotes[0],
+                sortedNotes[1],
+                curIntAbbrEl,
+                intCard1
+              );
             } else {
-              console.log("heyo");
               MyHi.dispNote("", curPitch3BEl);
-              MyHi.displayInt("", "", curIntAbbrEl, sortedNotes);
+              MyHi.displayInt("", "", curIntAbbrEl, intCard1);
             }
             break;
           case 2:
             if (sortedNotes[i]) {
               MyHi.dispNote(note, curPitch3CEl);
-              var freq2 = sortedNotes[1].freq;
-              var freq3 = sortedNotes[2].freq;
-              MyHi.displayInt(freq2, freq3, curIntAbbrEl2);
+              MyHi.displayInt(
+                sortedNotes[1],
+                sortedNotes[2],
+                curIntAbbrEl2,
+                intCard2
+              );
             } else {
               MyHi.dispNote("", curPitch3CEl);
-              MyHi.displayInt("", "", curIntAbbrEl2, sortedNotes);
+              MyHi.displayInt("", "", curIntAbbrEl2, intCard2);
             }
             break;
         }
+      }
+      if (activeNotes.length < 3) {
+        chordLabel.text("Chord");
+        chordCard1.css("background", "black");
+        triadName.text("");
       }
     });
     break;

@@ -6,7 +6,7 @@
     <div class="synth-card a">
       <div class="synth-header">
         <div>
-          <h2>A</h2>
+          <h2></h2>
         </div>
         <div>
           <label for="synth-list"><h3>Synth Type:</h3></label>
@@ -62,7 +62,7 @@
     <div class="synth-card b">
       <div class="synth-header">
         <div>
-          <h2>B</h2>
+          <h2></h2>
         </div>
         <div>
           <label for="synth-list"><h3>Synth Type:</h3></label>
@@ -115,7 +115,7 @@
     <div class="synth-card c">
       <div class="synth-header">
         <div>
-          <h2>C</h2>
+          <h2></h2>
         </div>
         <div>
           <label for="synth-list"><h3>Synth Type:</h3></label>
@@ -168,14 +168,14 @@
 
   <div class="disp-container">
     <div class="disp-card a">
-      <h2></h2>
+      <h2>Note</h2>
       <div class="note-div">
         <span class="note-name" id="cur-pitch-3A"></span>
       </div>
     </div>
 
     <div class="disp-card b">
-      <h2></h2>
+      <h2>Note</h2>
       <div class="note-div">
         <span class="note-name" id="cur-pitch-3B"></span>
       </div>
@@ -183,7 +183,7 @@
     </div>
 
     <div class="disp-card c">
-      <h2></h2>
+      <h2>Note</h2>
       <div class="note-div">
         <span class="note-name" id="cur-pitch-3C"></span>
       </div>
@@ -191,14 +191,14 @@
   </div>
   <div class="int-disp-row">
     <div class="disp-card ab">
-      <h2>Harmonic Interval #1</h2>
+      <h2>Interval</h2>
       <div class="int-div">
         <span class="int-name" id="cur-int-abbr"></span>
       </div>
     </div>
 
     <div class="disp-card bc">
-      <h2>Harmonic Interval #2</h2>
+      <h2>Interval</h2>
       <div class="int-div">
         <span class="int-name" id="cur-int-abbr-2"></span>
       </div>
@@ -206,20 +206,9 @@
   </div>
   <div class="chord-disp-row">
     <div class="disp-card abc">
-      <h2>Chord</h2>
-      <div class="info-row">
-        <div class="info-col">
-          <h3>Root</h3>
-          <span id="triad-root"></span>
-        </div>
-        <div class="info-col">
-          <h3>Name </h3>
-          <span id="triad-name"></span>
-        </div>
-        <div class="info-col">
-          <h3>Inversion </h3>
-          <span id="triad-inv" class="unruly-abbr"></span>
-        </div>
+      <h2 id="cho-label">Chord</h2>
+      <div class="chord-div">
+        <span class="chord-name" id="triad-name"></span>
       </div>
     </div>
     <div id="alt-chord" class="disp-card abc-2" style="display:none">

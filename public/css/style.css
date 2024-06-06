@@ -2,6 +2,9 @@
   --lt-blue: rgb(141, 150, 249);
   --lt-red: rgb(249, 141, 141);
   --lt-yel: rgb(249, 233, 141);
+  --lt-orng: rgb(251, 201, 107);
+  --lt-grn: rgb(145, 220, 145);
+  --lt-prpl: rgb(189, 141, 249);
 }
 /* main.handlebars */
 * {
@@ -101,42 +104,32 @@ select::-ms-expand {
   background-color: black;
 }
 .disp-card.ab {
-  background-image: linear-gradient(
-    to right,
-    var(--lt-red) 0%,
-    var(--lt-red) 20%,
-    rgb(251, 201, 107) 20%,
-    rgb(251, 201, 107) 80%,
-    var(--lt-yel) 80%,
-    var(--lt-yel) 100%
-  );
+  background-color: black;
 }
 .disp-card.bc {
-  background-image: linear-gradient(
-    to right,
-    var(--lt-yel) 0%,
-    var(--lt-yel) 20%,
-    rgb(145, 220, 145) 20%,
-    rgb(145, 220, 145) 80%,
-    var(--lt-blue) 80%,
-    var(--lt-blue) 100%
-  );
+  background-color: black;
+}
+.disp-card h2 {
+  color: white;
+}
+.disp-card.abc {
+  width: 60%;
+  background: black;
+  background-size: 200% 100%;
+
+  animation: AnimationName 1s linear infinite;
 }
 
-.disp-card.abc {
-  background-image: linear-gradient(
-    to right,
-    var(--lt-red) 0%,
-    var(--lt-red) 20%,
-    rgb(251, 201, 107) 20%,
-    rgb(251, 201, 107) 40%,
-    /* First stripe: Red */ var(--lt-yel) 40%,
-    var(--lt-yel) 60%,
-    rgb(145, 220, 145) 60%,
-    rgb(145, 220, 145) 80%,
-    /* Second stripe: Green */ var(--lt-blue) 80%,
-    var(--lt-blue) 100% /* Third stripe: Blue */
-  );
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 .disp-card.abc-2 {
   background-image: linear-gradient(
@@ -253,11 +246,19 @@ select::-ms-expand {
   display: flex;
   justify-content: center;
 }
+.chord-div {
+  display: flex;
+  justify-content: center;
+}
 .note-name {
   font-size: 50px;
   text-align: center;
 }
 .int-name {
+  font-size: 50px;
+  text-align: center;
+}
+.chord-name {
   font-size: 50px;
   text-align: center;
 }
