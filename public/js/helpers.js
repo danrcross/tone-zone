@@ -383,11 +383,40 @@ export default class Hi {
     return newArr[0];
   }
   // temporarily disabled duration display, as it is not used on p2
-  dispNote(ddNoteVal, freqName, pitchEl, freqEl, volEl, dbLv) {
-    pitchEl.text(ddNoteVal);
+  dispNote(note, pitchEl) {
+    const parCard = pitchEl.closest(".disp-card");
+    if (note !== "") {
+      if (note.pitch.length === 2) {
+        pitchEl.text(note.pitch[0]);
+      } else {
+        pitchEl.text(note.pitch[0] + note.pitch[1]);
+      }
+
+      switch (note.synth) {
+        case "3A":
+          parCard.css("background-color", "var(--lt-red)");
+          break;
+        case "3B":
+          parCard.css("background-color", "var(--lt-yel)");
+          break;
+        case "3C":
+          parCard.css("background-color", "var(--lt-blue)");
+          break;
+      }
+    } else {
+      console.log("here");
+      pitchEl.text(note);
+      parCard.css("background-color", "black");
+    }
+
+    // const card = pitchEl.closest(".disp-card");
+    // if (ddNoteVal !== "") {
+    //   console.log(card);
+    //   card.css("background-color");
+    // }
     // the acquisition of freqName will need to be altered for p1
-    freqEl.text(freqName + " Hz");
-    volEl.text(this.curVolVal + " db");
+    // freqEl.text(freqName + " Hz");
+    // volEl.text(this.curVolVal + " db");
     // var curDurNota = Tone.Time(this.curDurVal).toNotation();
     // curDurEl.text(this.curDurVal * 1000 + " ms, " + curDurNota);
   }
@@ -488,26 +517,42 @@ export default class Hi {
     synthNum.dispose();
   }
   // need to create logic for inverted intervals
-  displayInt(freq1, freq2, intEl, intAbbrEl, intHsEl) {
-    var note1 = this.matchNoteFreq(freq1);
-    var note2 = this.matchNoteFreq(freq2);
-    var intFactor = note2.value - note1.value;
-    if (intFactor < 0) {
-      intFactor = intFactor * -1;
-    }
-    var intName;
-    var intAbbr;
-    var intHs;
-    intArr.forEach((int) => {
-      if (int.value === intFactor) {
-        intName = int.name;
-        intAbbr = int.abbr;
-        intHs = int.value;
+  displayInt(freq1, freq2, intAbbrEl, sortedNotes) {
+    const intCard = intAbbrEl.closest(".disp-card");
+    if (freq1 !== "" && freq2 !== "") {
+      var note1 = this.matchNoteFreq(freq1);
+      var note2 = this.matchNoteFreq(freq2);
+      var note1Synth = note1.synth;
+      var note2Synth = note2.synth;
+      console.log(note1Synth + " " + note2Synth);
+      var intFactor = note2.value - note1.value;
+      if (intFactor < 0) {
+        intFactor = intFactor * -1;
       }
-    });
-    intEl.text(intName);
-    intAbbrEl.text(intAbbr);
-    intHsEl.text(intHs);
+      var intAbbr;
+      intArr.forEach((int) => {
+        if (int.value === intFactor) {
+          intAbbr = int.abbr;
+        }
+      });
+      intAbbrEl.text(intAbbr);
+
+      intCard.css(
+        "background-image",
+        `linear-gradient(
+to right,
+var(--lt-red) 0%,
+var(--lt-red) 20%,
+ rgb(251, 201, 107) 20%,
+  rgb(251, 201, 107) 80%,
+  var(--lt-yel) 80%,
+   var(--lt-yel) 100%
+  )`
+      );
+    } else {
+      intAbbrEl.text("");
+    }
+
     return intFactor;
   }
 
