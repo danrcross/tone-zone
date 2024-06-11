@@ -76,13 +76,14 @@ import {
   sliderMid3C,
   sliderHigh3C,
   triadName,
-  triadInv,
-  triadRoot,
   altChordDisp,
-  triadName2,
-  triadInv2,
-  triadRoot2,
   ctrlToggle,
+  intCard1,
+  intCard2,
+  chordCard1,
+  chordCard2,
+  chordLabel,
+  chordLabel2,
 } from "./dom.js";
 // instruments up here
 const vol = new Tone.Volume(0).toDestination();
@@ -215,144 +216,146 @@ const intArr = [
   { value: 24, name: "Minor 2nd", abbr: "m2" },
 ];
 
+const majTri = "\u25B3";
+const dimDeg = "\u00B0";
 const triNoteArr = [
   {
-    name: "Major",
+    name: majTri,
     intervals: [4, 3],
     inversion: "Root",
   },
   {
-    name: "Minor",
+    name: "-",
     intervals: [3, 4],
     inversion: "Root",
   },
   {
-    name: "Suspended Second",
+    name: "sus2",
     intervals: [2, 5],
     inversion: "Root",
   },
   {
-    name: "Suspended Fourth",
+    name: "sus4",
     intervals: [5, 2],
     inversion: "Root",
   },
   {
-    name: "Diminished",
+    name: dimDeg,
     intervals: [3, 3],
     inversion: "Root",
   },
   {
-    name: "Augmented",
+    name: "+",
     intervals: [4, 4],
     inversion: "Root",
   },
   {
-    name: "Major",
+    name: majTri,
     intervals: [3, 5],
     inversion: "First",
   },
   {
-    name: "Minor",
+    name: "-",
     intervals: [4, 5],
     inversion: "First",
   },
   {
-    name: "Suspended Second",
+    name: "sus2",
     intervals: [5, 5],
     inversion: "First",
   },
   {
-    name: "Suspended Fourth",
+    name: "sus4",
     intervals: [2, 5],
     inversion: "First",
   },
   {
-    name: "Diminished",
+    name: dimDeg,
     intervals: [3, 6],
     inversion: "First",
   },
   {
-    name: "Major",
+    name: majTri,
     intervals: [5, 4],
     inversion: "Second",
   },
   {
-    name: "Minor",
+    name: "-",
     intervals: [5, 3],
     inversion: "Second",
   },
   {
-    name: "Suspended Second",
+    name: "sus2",
     intervals: [5, 2],
     inversion: "Second",
   },
   {
-    name: "Suspended Fourth",
+    name: "sus4",
     intervals: [5, 5],
     inversion: "Second",
   },
   {
-    name: "Diminished",
+    name: dimDeg,
     intervals: [6, 3],
     inversion: "Second",
   },
   {
-    name: "Major Seventh (no 5th)",
+    name: majTri + "7" + "(no5)",
     intervals: [4, 7],
     inversion: "Root",
   },
   {
-    name: "Minor Seventh (no 5th)",
+    name: "-" + "7" + "(no5)",
     intervals: [3, 7],
     inversion: "Root",
   },
   {
-    name: "Major Seventh (no 5th)",
+    name: majTri + "7" + "(no5)",
     intervals: [7, 1],
     inversion: "First",
   },
   {
-    name: "Minor Seventh (no 5th)",
+    name: "-" + "7" + "(no5)",
     intervals: [7, 2],
     inversion: "First",
   },
   {
-    name: "Major Seventh (no 5th)",
+    name: majTri + "7" + "(no5)",
     intervals: [1, 4],
     inversion: "Third",
   },
   {
-    name: "Minor Seventh (no 5th)",
+    name: "-" + "7" + "(no5)",
     intervals: [2, 3],
     inversion: "Third",
   },
   {
-    name: "Dominant Seventh (no 5th)",
+    name: "7" + "(no5)",
     intervals: [4, 6],
     inversion: "Root",
   },
   {
-    name: "Dominant Seventh (no 5th)",
+    name: "7" + "(no5)",
     intervals: [6, 4],
     inversion: "First",
   },
   {
-    name: "Dominant Seventh (no 5th)",
+    name: "7" + "(no5)",
     intervals: [2, 4],
     inversion: "Third",
   },
   {
-    name: "Major add9 (no 5th)",
+    name: majTri + "(add9)(no5)",
     intervals: [4, 10],
     inversion: "Root",
   },
   {
-    name: "Major add9 (no 5th)",
+    name: majTri + "(add9)(no5)",
     intervals: [10, 10],
     inversion: "First",
   },
   {
-    name: "Major add9 (no 5th)",
+    name: majTri + "(add9)(no5)",
     intervals: [8, 2],
     inversion: "Third",
   },
@@ -383,11 +386,46 @@ export default class Hi {
     return newArr[0];
   }
   // temporarily disabled duration display, as it is not used on p2
-  dispNote(ddNoteVal, freqName, pitchEl, freqEl, volEl, dbLv) {
-    pitchEl.text(ddNoteVal);
+  dispNote(note, pitchEl) {
+    const label = pitchEl.closest(".disp-card").find("h2");
+    label.text("");
+    const parCard = pitchEl.closest(".disp-card");
+    if (note !== "") {
+      if (note.pitch.length === 2) {
+        label.text(note.pitch[0]);
+        label.css({ "font-size": "50px", margin: "2px 2px", color: "black" });
+        // pitchEl.text(note.pitch[0]);
+      } else {
+        label.text(note.pitch[0] + note.pitch[1]);
+        label.css({ "font-size": "50px", margin: "2px 2px", color: "black" });
+      }
+
+      switch (note.synth) {
+        case "3A":
+          parCard.css("background-color", "var(--lt-red)");
+          break;
+        case "3B":
+          parCard.css("background-color", "var(--lt-yel)");
+          break;
+        case "3C":
+          parCard.css("background-color", "var(--lt-blue)");
+          break;
+      }
+    } else {
+      label.text("Note");
+      pitchEl.text(note);
+      label.css({ "font-size": "20px", color: "white" });
+      parCard.css("background-color", "black");
+    }
+
+    // const card = pitchEl.closest(".disp-card");
+    // if (ddNoteVal !== "") {
+    //   console.log(card);
+    //   card.css("background-color");
+    // }
     // the acquisition of freqName will need to be altered for p1
-    freqEl.text(freqName + " Hz");
-    volEl.text(this.curVolVal + " db");
+    // freqEl.text(freqName + " Hz");
+    // volEl.text(this.curVolVal + " db");
     // var curDurNota = Tone.Time(this.curDurVal).toNotation();
     // curDurEl.text(this.curDurVal * 1000 + " ms, " + curDurNota);
   }
@@ -488,30 +526,140 @@ export default class Hi {
     synthNum.dispose();
   }
   // need to create logic for inverted intervals
-  displayInt(freq1, freq2, intEl, intAbbrEl, intHsEl) {
-    var note1 = this.matchNoteFreq(freq1);
-    var note2 = this.matchNoteFreq(freq2);
-    var intFactor = note2.value - note1.value;
-    if (intFactor < 0) {
-      intFactor = intFactor * -1;
-    }
-    var intName;
-    var intAbbr;
-    var intHs;
-    intArr.forEach((int) => {
-      if (int.value === intFactor) {
-        intName = int.name;
-        intAbbr = int.abbr;
-        intHs = int.value;
+  displayInt(note1, note2, intAbbrEl, cardNum) {
+    var label = cardNum.find("h2");
+    var note1;
+    var note2;
+    const red = `var(--lt-red)`;
+    const yel = `var(--lt-yel)`;
+    const blue = `var(--lt-blue)`;
+    const orng = `var(--lt-orng)`;
+    const grn = `var(--lt-grn)`;
+    const prpl = `var(--lt-prpl)`;
+    var color1;
+    var color2;
+    var midcolor;
+    if (note1 !== "" && note2 !== "") {
+      label.text("");
+      switch (note1.synth) {
+        case "3A":
+          color1 = red;
+          switch (note2.synth) {
+            case "3B":
+              color2 = yel;
+              midcolor = orng;
+              break;
+            case "3C":
+              color2 = blue;
+              midcolor = prpl;
+              break;
+          }
+          break;
+        case "3B":
+          color1 = yel;
+          switch (note2.synth) {
+            case "3A":
+              color2 = red;
+              midcolor = orng;
+              break;
+            case "3C":
+              color2 = blue;
+              midcolor = grn;
+              break;
+          }
+          break;
+        case "3C":
+          color1 = blue;
+          switch (note2.synth) {
+            case "3A":
+              color2 = red;
+              midcolor = prpl;
+              break;
+            case "3B":
+              color2 = yel;
+              midcolor = grn;
+              break;
+          }
+          break;
       }
-    });
-    intEl.text(intName);
-    intAbbrEl.text(intAbbr);
-    intHsEl.text(intHs);
+      var intFactor = note1.value - note2.value;
+      if (intFactor < 0) {
+        intFactor = intFactor * -1;
+      }
+      var intAbbr;
+      intArr.forEach((int) => {
+        if (int.value === intFactor) {
+          intAbbr = int.abbr;
+        }
+      });
+      label.text(intAbbr);
+      label.css({ "font-size": "50px", color: "black" });
+
+      cardNum.css(
+        "background-image",
+        `linear-gradient(to right,${color1} 0%,${color1} 20%, ${midcolor} 20%,  ${midcolor} 80%,${color2} 80%,${color2} 100%  )`
+      );
+    } else {
+      label.text("Interval");
+      label.css({ color: "white", "font-size": "20px" });
+      // intAbbrEl.text("");
+
+      cardNum.css("background-image", "");
+    }
+
     return intFactor;
   }
 
   async triadAnalyzer(notesArr) {
+    chordLabel.text("");
+    const orng = `var(--lt-orng)`;
+    const grn = `var(--lt-grn)`;
+    const prpl = `var(--lt-prpl)`;
+    var color1;
+    var color2;
+    var synths = [];
+    notesArr.forEach((note) => {
+      synths.push(note.synth);
+    });
+    switch (synths[0]) {
+      case "3A":
+        if (synths[1] === "3B") {
+          color1 = orng;
+          color2 = grn;
+        } else {
+          color1 = prpl;
+          color2 = grn;
+        }
+        break;
+      case "3B":
+        if (synths[1] === "3A") {
+          color1 = orng;
+          color2 = prpl;
+        } else {
+          color1 = grn;
+          color2 = prpl;
+        }
+        break;
+      case "3C":
+        if (synths[1] === "3A") {
+          color1 = prpl;
+          color2 = orng;
+        } else {
+          color1 = grn;
+          color2 = orng;
+        }
+    }
+    chordCard1.css({
+      background: `linear-gradient(270deg, ${color1} , ${color2} )`,
+      "background-size": `400% 400%`,
+      animation: `AnimationName 2s ease infinite`,
+    });
+    chordCard2.css({
+      background: `linear-gradient(270deg, ${color1} , ${color2} )`,
+      "background-size": `400% 400%`,
+      animation: `AnimationName 2s ease infinite`,
+    });
+
     const noteVals = notesArr.map((note) => note.value);
     let thisIntArr = [];
     for (var i = 0; i < noteVals.length - 1; i++) {
@@ -525,81 +673,272 @@ export default class Hi {
         }
       }
     });
-
     if (matches.length) {
-      triadName.text(matches[0].name);
-      triadInv.text(matches[0].inversion);
+      altChordDisp.css({ display: "none" });
+      chordLabel.css({ color: "black", "font-size": "50px" });
       switch (matches[0].inversion) {
         case "Root":
           if (notesArr[0].pitch.length === 2) {
-            triadRoot.text(notesArr[0].pitch[0]);
+            chordLabel.text(notesArr[0].pitch[0] + matches[0].name);
           } else {
-            triadRoot.text(notesArr[0].pitch[0] + notesArr[0].pitch[1]);
+            chordLabel.text(
+              notesArr[0].pitch[0] + notesArr[0].pitch[1] + matches[0].name
+            );
           }
           break;
         case "First":
           if (notesArr[2].pitch.length === 2) {
-            triadRoot.text(notesArr[2].pitch[0]);
+            if (notesArr[0].pitch.length === 2) {
+              chordLabel.text(
+                notesArr[2].pitch[0] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0]
+              );
+            } else if (notesArr[0].pitch.length === 3) {
+              chordLabel.text(
+                notesArr[2].pitch[0] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0] +
+                  notesArr[0].pitch[1]
+              );
+            }
           } else {
-            triadRoot.text(notesArr[2].pitch[0] + notesArr[2].pitch[1]);
+            if (notesArr[0].pitch.length === 2) {
+              chordLabel.text(
+                notesArr[2].pitch[0] +
+                  notesArr[2].pitch[1] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0]
+              );
+            } else if (notesArr[0].pitch.length === 3) {
+              chordLabel.text(
+                notesArr[2].pitch[0] +
+                  notesArr[2].pitch[1] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0] +
+                  notesArr[0].pitch[1]
+              );
+            }
           }
           break;
         case "Second":
           if (notesArr[1].pitch.length === 2) {
-            triadRoot.text(notesArr[1].pitch[0]);
+            if (notesArr[0].pitch.length === 2) {
+              chordLabel.text(
+                notesArr[1].pitch[0] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0]
+              );
+            } else if (notesArr[1].pitch.length === 3) {
+              chordLabel.text(
+                notesArr[1].pitch[0] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0] +
+                  notesArr[0].pitch[1]
+              );
+            }
           } else {
-            triadRoot.text(notesArr[1].pitch[0] + notesArr[1].pitch[1]);
+            if (notesArr[0].pitch.length === 2) {
+              chordLabel.text(
+                notesArr[1].pitch[0] +
+                  notesArr[1].pitch[1] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0]
+              );
+            } else if (notesArr[0].pitch.length === 3) {
+              chordLabel.text(
+                notesArr[1].pitch[0] +
+                  notesArr[1].pitch[1] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0] +
+                  notesArr[0].pitch[1]
+              );
+            }
           }
           break;
         case "Third":
           if (notesArr[1].pitch.length === 2) {
-            triadRoot.text(notesArr[1].pitch[0]);
+            if (notesArr[0].pitch.length === 2) {
+              chordLabel.text(
+                notesArr[1].pitch[0] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0]
+              );
+            } else if (notesArr[1].pitch.length === 3) {
+              chordLabel.text(
+                notesArr[1].pitch[0] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0] +
+                  notesArr[0].pitch[1]
+              );
+            }
           } else {
-            triadRoot.text(notesArr[1].pitch[0] + notesArr[1].pitch[1]);
+            if (notesArr[0].pitch.length === 2) {
+              chordLabel.text(
+                notesArr[1].pitch[0] +
+                  notesArr[1].pitch[1] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0]
+              );
+            } else if (notesArr[0].pitch.length === 3) {
+              chordLabel.text(
+                notesArr[1].pitch[0] +
+                  notesArr[1].pitch[1] +
+                  matches[0].name +
+                  "/" +
+                  notesArr[0].pitch[0] +
+                  notesArr[0].pitch[1]
+              );
+            }
           }
-          break;
       }
       if (matches.length > 1) {
-        altChordDisp.css({ display: "" });
-        triadName2.text(matches[1].name);
-        triadInv2.text(matches[1].inversion);
+        chordCard2.css({ display: "flex", width: "30%" });
+        chordCard1.css({ display: "flex", width: "30%" });
+        chordLabel2.css({ color: "black", "font-size": "50px" });
+        console.log(matches[1]);
         switch (matches[1].inversion) {
           case "Root":
             if (notesArr[0].pitch.length === 2) {
-              triadRoot2.text(notesArr[0].pitch[0]);
+              chordLabel2.text(notesArr[0].pitch[0] + matches[1].name);
             } else {
-              triadRoot2.text(notesArr[0].pitch[0] + notesArr[0].pitch[1]);
+              chordLabel2.text(
+                notesArr[0].pitch[0] + notesArr[0].pitch[1] + matches[1].name
+              );
             }
             break;
           case "First":
             if (notesArr[2].pitch.length === 2) {
-              triadRoot2.text(notesArr[2].pitch[0]);
+              if (notesArr[0].pitch.length === 2) {
+                chordLabel2.text(
+                  notesArr[2].pitch[0] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0]
+                );
+              } else if (notesArr[0].pitch.length === 3) {
+                chordLabel2.text(
+                  notesArr[2].pitch[0] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0] +
+                    notesArr[0].pitch[1]
+                );
+              }
             } else {
-              triadRoot2.text(notesArr[2].pitch[0] + notesArr[2].pitch[1]);
+              if (notesArr[0].pitch.length === 2) {
+                chordLabel2.text(
+                  notesArr[2].pitch[0] +
+                    notesArr[2].pitch[1] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0]
+                );
+              } else if (notesArr[0].pitch.length === 3) {
+                chordLabel2.text(
+                  notesArr[2].pitch[0] +
+                    notesArr[2].pitch[1] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0] +
+                    notesArr[0].pitch[1]
+                );
+              }
             }
             break;
           case "Second":
             if (notesArr[1].pitch.length === 2) {
-              triadRoot2.text(notesArr[1].pitch[0]);
+              if (notesArr[0].pitch.length === 2) {
+                chordLabel2.text(
+                  notesArr[1].pitch[0] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0]
+                );
+              } else if (notesArr[1].pitch.length === 3) {
+                chordLabel2.text(
+                  notesArr[1].pitch[0] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0] +
+                    notesArr[0].pitch[1]
+                );
+              }
             } else {
-              triadRoot2.text(notesArr[1].pitch[0] + notesArr[1].pitch[1]);
+              if (notesArr[0].pitch.length === 2) {
+                chordLabel2.text(
+                  notesArr[1].pitch[0] +
+                    notesArr[1].pitch[1] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0]
+                );
+              } else if (notesArr[0].pitch.length === 3) {
+                chordLabel2.text(
+                  notesArr[1].pitch[0] +
+                    notesArr[1].pitch[1] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0] +
+                    notesArr[0].pitch[1]
+                );
+              }
             }
             break;
           case "Third":
             if (notesArr[1].pitch.length === 2) {
-              triadRoot2.text(notesArr[1].pitch[0]);
+              if (notesArr[0].pitch.length === 2) {
+                chordLabel2.text(
+                  notesArr[1].pitch[0] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0]
+                );
+              } else if (notesArr[1].pitch.length === 3) {
+                chordLabel2.text(
+                  notesArr[1].pitch[0] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0] +
+                    notesArr[0].pitch[1]
+                );
+              }
             } else {
-              triadRoot2.text(notesArr[1].pitch[0] + notesArr[1].pitch[1]);
+              if (notesArr[0].pitch.length === 2) {
+                chordLabel2.text(
+                  notesArr[1].pitch[0] +
+                    notesArr[1].pitch[1] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0]
+                );
+              } else if (notesArr[0].pitch.length === 3) {
+                chordLabel2.text(
+                  notesArr[1].pitch[0] +
+                    notesArr[1].pitch[1] +
+                    matches[1].name +
+                    "/" +
+                    notesArr[0].pitch[0] +
+                    notesArr[0].pitch[1]
+                );
+              }
             }
-            break;
         }
-      } else {
-        altChordDisp.css({ display: "none" });
       }
     } else {
-      triadName.text("N/A");
-      triadInv.text("");
-      triadRoot.text("");
+      chordLabel.css({ color: "white", "font-size": "20px" });
+      chordLabel.text("Unknown Chord");
       altChordDisp.css({ display: "none" });
     }
   }

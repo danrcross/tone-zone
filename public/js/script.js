@@ -83,19 +83,19 @@ import {
   curIntEl2,
   curIntAbbrEl2,
   curIntHsEl2,
-  triadName,
-  triadInv,
-  triadRoot,
   altChordDisp,
-  triadName2,
-  triadInv2,
-  triadRoot2,
   ctrlToggle,
   ctrlPanel,
   imgToggle,
   imgDispToggle,
   keyMapImg,
   keyMapDiv,
+  intCard1,
+  intCard2,
+  chordCard1,
+  chordCard2,
+  chordLabel,
+  chordLabel2,
 } from "./dom.js";
 
 // Add functionality to nav bar
@@ -405,13 +405,6 @@ switch (window.location.pathname) {
         activeNotes.push(note);
         // play synth at 'key'
         MyHi.attackSynthNum(synth2A, key);
-        MyHi.dispNote(
-          note.pitch,
-          note.freq,
-          curPitch2AEl,
-          curFreq2AEl,
-          curVol2AEl
-        );
       } else if (activeNotes.length === 1) {
         // similar to above, but if a note is active, second synth will be activated
         var keyData = await MyHi.getKeyNote(key);
@@ -429,13 +422,6 @@ switch (window.location.pathname) {
           MyHi.displayInt(freq1, freq2, curIntEl, curIntAbbrEl, curIntHsEl);
         }
         MyHi.attackSynthNum(synth2B, key);
-        MyHi.dispNote(
-          note.pitch,
-          note.freq,
-          curPitch2BEl,
-          curFreq2BEl,
-          curVol2BEl
-        );
       }
     });
 
@@ -687,6 +673,8 @@ switch (window.location.pathname) {
       },
     });
 
+    //for loop to display notes based on order
+
     // define behavior when a key is pressed down
     // I wonder if these down/up functions could be simplified...
     keyboard3.down(async (key) => {
@@ -706,13 +694,6 @@ switch (window.location.pathname) {
         activeNotes.push(note);
         // play synth at 'key'
         MyHi.attackSynthNum(synth3A, key);
-        MyHi.dispNote(
-          note.pitch,
-          note.freq,
-          curPitch3AEl,
-          curFreq3AEl,
-          curVol3AEl
-        );
       } else if (activeNotes.length === 1) {
         // similar to above, but if a note is active, second synth will be activated
         var keyData = await MyHi.getKeyNote(key);
@@ -725,26 +706,7 @@ switch (window.location.pathname) {
           value: keyData.value,
         };
         activeNotes.push(note);
-        if (activeNotes.length === 2) {
-          var freq1 = activeNotes[0].freq;
-          var freq2 = activeNotes[1].freq;
-          var int = MyHi.displayInt(
-            freq1,
-            freq2,
-            curIntEl,
-            curIntAbbrEl,
-            curIntHsEl
-          );
-          activeInts.push(int);
-        }
         MyHi.attackSynthNum(synth3B, key);
-        MyHi.dispNote(
-          note.pitch,
-          note.freq,
-          curPitch3BEl,
-          curFreq3BEl,
-          curVol3BEl
-        );
       } else if (activeNotes.length === 2) {
         // similar to above, but if a note is active, second synth will be activated
         var keyData = await MyHi.getKeyNote(key);
@@ -758,30 +720,58 @@ switch (window.location.pathname) {
         };
         activeNotes.push(note);
         // need to add another interval display
-        if (activeNotes.length === 3) {
-          var freq2 = activeNotes[1].freq;
-          var freq3 = activeNotes[2].freq;
-          var int = MyHi.displayInt(
-            freq2,
-            freq3,
-            curIntEl2,
-            curIntAbbrEl2,
-            curIntHsEl2
-          );
-          activeInts.push(int);
-          var sortedNotes = MyHi.orderNotes(activeNotes);
-          MyHi.triadAnalyzer(sortedNotes);
-        }
         MyHi.attackSynthNum(synth3C, key);
-        MyHi.dispNote(
-          note.pitch,
-          note.freq,
-          curPitch3CEl,
-          curFreq3CEl,
-          curVol3CEl
-        );
       } else if (activeNotes.length >= 3) {
         return;
+      }
+      var sortedNotes = MyHi.orderNotes(activeNotes);
+      for (var i = 0; i < sortedNotes.length; i++) {
+        if (sortedNotes[i]) {
+          var note = sortedNotes[i];
+        }
+        switch (i) {
+          case 0:
+            if (sortedNotes[i]) {
+              MyHi.dispNote(note, curPitch3AEl);
+            } else {
+              MyHi.dispNote("", curPitch3AEl);
+            }
+            break;
+          case 1:
+            if (sortedNotes[i]) {
+              MyHi.dispNote(note, curPitch3BEl);
+              var int = MyHi.displayInt(
+                sortedNotes[0],
+                sortedNotes[1],
+                curIntAbbrEl,
+                intCard1
+              );
+              activeInts.push(int);
+            } else {
+              MyHi.dispNote("", curPitch3BEl);
+              var int = MyHi.displayInt("", "", curIntAbbrEl, intCard1);
+            }
+            break;
+          case 2:
+            if (sortedNotes[i]) {
+              MyHi.dispNote(note, curPitch3CEl);
+              var int = MyHi.displayInt(
+                sortedNotes[1],
+                sortedNotes[2],
+                curIntAbbrEl2,
+                intCard2
+              );
+              activeInts.push(int);
+            } else {
+              MyHi.dispNote("", curPitch3CEl);
+              MyHi.displayInt("", "", curIntAbbrEl2, intCard2);
+            }
+            break;
+        }
+      }
+      if (activeNotes.length === 3) {
+        var sortedNotes = MyHi.orderNotes(activeNotes);
+        MyHi.triadAnalyzer(sortedNotes);
       }
     });
 
@@ -813,6 +803,55 @@ switch (window.location.pathname) {
       } else if (activeNotes[myInd].synth === "3C") {
         MyHi.releaseSynthNum(synth3C);
         activeNotes.splice(myInd, 1);
+      }
+      var sortedNotes = MyHi.orderNotes(activeNotes);
+      for (var i = 0; i < 3; i++) {
+        if (sortedNotes[i]) {
+          var note = sortedNotes[i];
+        }
+        switch (i) {
+          case 0:
+            if (sortedNotes[i]) {
+              MyHi.dispNote(note, curPitch3AEl);
+            } else {
+              MyHi.dispNote("", curPitch3AEl);
+            }
+            break;
+          case 1:
+            if (sortedNotes[i]) {
+              MyHi.dispNote(note, curPitch3BEl);
+              MyHi.displayInt(
+                sortedNotes[0],
+                sortedNotes[1],
+                curIntAbbrEl,
+                intCard1
+              );
+            } else {
+              MyHi.dispNote("", curPitch3BEl);
+              MyHi.displayInt("", "", curIntAbbrEl, intCard1);
+            }
+            break;
+          case 2:
+            if (sortedNotes[i]) {
+              MyHi.dispNote(note, curPitch3CEl);
+              MyHi.displayInt(
+                sortedNotes[1],
+                sortedNotes[2],
+                curIntAbbrEl2,
+                intCard2
+              );
+            } else {
+              MyHi.dispNote("", curPitch3CEl);
+              MyHi.displayInt("", "", curIntAbbrEl2, intCard2);
+            }
+            break;
+        }
+      }
+      if (activeNotes.length < 3) {
+        chordLabel.css({ color: "white", "font-size": "20px" });
+        chordLabel.text("Chord");
+        chordCard1.css("background", "black");
+        chordCard2.css("display", "none");
       }
     });
     break;

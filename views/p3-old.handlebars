@@ -6,7 +6,7 @@
     <div class="synth-card a">
       <div class="synth-header">
         <div>
-          <h2></h2>
+          <h2>Synth A</h2>
         </div>
         <div>
           <label for="synth-list"><h3>Synth Type:</h3></label>
@@ -62,7 +62,7 @@
     <div class="synth-card b">
       <div class="synth-header">
         <div>
-          <h2></h2>
+          <h2>Synth B</h2>
         </div>
         <div>
           <label for="synth-list"><h3>Synth Type:</h3></label>
@@ -115,7 +115,7 @@
     <div class="synth-card c">
       <div class="synth-header">
         <div>
-          <h2></h2>
+          <h2>Synth C</h2>
         </div>
         <div>
           <label for="synth-list"><h3>Synth Type:</h3></label>
@@ -168,53 +168,136 @@
 
   <div class="disp-container">
     <div class="disp-card a">
-      <h2>Note</h2>
-      <div class="note-div">
-        <span class="note-name" id="cur-pitch-3A"></span>
+      <h2>Synth A</h2>
+      <div class="info">
+        <div class="wrapper">
+          <table>
+            <tr class="info-key">
+              <th>Property </th>
+              <th>Value </th>
+            </tr>
+            <tr class="info-key">
+              <td class="table-prop">Pitch </td>
+              <td class="table-val" id="cur-pitch-3A"></td>
+            </tr>
+            <tr class="info-key">
+              <td class="table-prop">Frequency</td>
+              <td class="table-val" id="cur-freq-3A"></td>
+            </tr>
+            <tr class="info-key">
+              <td class="table-prop">Volume </td>
+              <td class="table-val" id="cur-vol-3A"></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
 
     <div class="disp-card b">
-      <h2>Note</h2>
-      <div class="note-div">
-        <span class="note-name" id="cur-pitch-3B"></span>
+      <h2>Synth B</h2>
+      <div class="info">
+        <table>
+          <tr class="info-key">
+            <th>Pitch </th>
+            <th>Frequency </th>
+            <th>Volume </th>
+          </tr>
+          <tr class="info-val">
+            <td id="cur-pitch-3B"></td>
+            <td id="cur-freq-3B"></td>
+            <td id="cur-vol-3B"></td>
+          </tr>
+        </table>
       </div>
-
     </div>
 
     <div class="disp-card c">
-      <h2>Note</h2>
-      <div class="note-div">
-        <span class="note-name" id="cur-pitch-3C"></span>
+      <h2>Synth C</h2>
+      <div class="info">
+        <table>
+          <tr class="info-key">
+            <th>Pitch </th>
+            <th>Frequency </th>
+            <th>Volume </th>
+          </tr>
+          <tr class="info-val">
+            <td id="cur-pitch-3C"></td>
+            <td id="cur-freq-3C"></td>
+            <td id="cur-vol-3C"></td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
   <div class="int-disp-row">
     <div class="disp-card ab">
-      <h2>Interval</h2>
-      <div class="int-div">
-        <span class="int-name" id="cur-int-abbr"></span>
+      <h2>Harmonic Interval #1</h2>
+      <div class="info">
+        <table>
+          <tr class="info-key">
+            <th>Name </th>
+            <th>Abbreviation </th>
+            <th># Half-Steps </th>
+          </tr>
+          <tr class="info-val">
+            <td id="cur-int"></td>
+            <td id="cur-int-abbr"></td>
+            <td id="cur-int-hs"></td>
+          </tr>
+        </table>
       </div>
     </div>
-
     <div class="disp-card bc">
-      <h2>Interval</h2>
-      <div class="int-div">
-        <span class="int-name" id="cur-int-abbr-2"></span>
+      <h2>Harmonic Interval #2</h2>
+      <div class="info-row">
+        <div class="info-col">
+          <h3>Name </h3>
+          <span id="cur-int-2"></span>
+        </div>
+        <div class="info-col">
+          <h3>Abbreviation </h3>
+          <span id="cur-int-abbr-2" class="unruly-abbr"></span>
+        </div>
+        <div class="info-col">
+          <h3># Half-Steps </h3>
+          <span id="cur-int-hs-2"></span>
+        </div>
       </div>
     </div>
   </div>
   <div class="chord-disp-row">
     <div class="disp-card abc">
-      <h2 id="cho-label">Chord</h2>
-      <div class="chord-div">
-        <span class="chord-name" id="triad-name"></span>
+      <h2>Chord</h2>
+      <div class="info-row">
+        <div class="info-col">
+          <h3>Root</h3>
+          <span id="triad-root"></span>
+        </div>
+        <div class="info-col">
+          <h3>Name </h3>
+          <span id="triad-name"></span>
+        </div>
+        <div class="info-col">
+          <h3>Inversion </h3>
+          <span id="triad-inv" class="unruly-abbr"></span>
+        </div>
       </div>
     </div>
     <div id="alt-chord" class="disp-card abc-2" style="display:none">
-      <h2 id="cho-label-2">Alternative Chord</h2>
-      <div class="chord-div">
-        <span class="chord-name" id="triad-name"></span>
+      <h2>Alternative Chord</h2>
+      <div class="info-row">
+        <div class="info-col">
+          <h3>Root</h3>
+          <span id="triad-root-2"></span>
+        </div>
+        <div class="info-col">
+          <h3>Name </h3>
+          <span id="triad-name-2"></span>
+        </div>
+        <div class="info-col">
+          <h3>Inversion </h3>
+          <span id="triad-inv-2" class="unruly-abbr"></span>
+        </div>
       </div>
     </div>
   </div>
