@@ -92,12 +92,8 @@ export const curIntAbbrEl2 = $("#cur-int-abbr-2");
 export const curIntHsEl2 = $("#cur-int-hs-2");
 
 export const triadName = $("#triad-name");
-export const triadInv = $("#triad-inv");
-export const triadRoot = $("#triad-root");
 export const altChordDisp = $("#alt-chord");
 export const triadName2 = $("#triad-name-2");
-export const triadInv2 = $("#triad-inv-2");
-export const triadRoot2 = $("#triad-root-2");
 
 export const ctrlToggle = $(".ctrl-toggle");
 export const ctrlPanel = $(".control-panel");
@@ -111,3 +107,4 @@ export const intCard2 = $(".disp-card.bc");
 export const chordCard1 = $(".disp-card.abc");
 export const chordCard2 = $(".disp-card.abc-2");
 export const chordLabel = $("#cho-label");
+export const chordLabel2 = $("#cho-label-2");

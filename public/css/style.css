@@ -110,12 +110,14 @@ select::-ms-expand {
   background-color: black;
 }
 .disp-card h2 {
+  padding: 10px 5px;
   color: white;
 }
 .disp-card.abc {
   width: 60%;
   background: black;
   background-size: 200% 100%;
+  justify-content: center;
 
   animation: AnimationName 1s linear infinite;
 }
@@ -132,15 +134,12 @@ select::-ms-expand {
   }
 }
 .disp-card.abc-2 {
-  background-image: linear-gradient(
-    to right,
-    var(--lt-red) 0%,
-    var(--lt-red) 33.33%,
-    /* First stripe: Red */ var(--lt-yel) 33.33%,
-    var(--lt-yel) 66.66%,
-    /* Second stripe: Green */ var(--lt-blue) 66.66%,
-    var(--lt-blue) 100% /* Third stripe: Blue */
-  );
+  width: 60%;
+  background: black;
+  background-size: 200% 100%;
+  justify-content: center;
+
+  animation: AnimationName 1s linear infinite;
 }
 
 .synth-header {
@@ -224,11 +223,13 @@ select::-ms-expand {
   border: black solid 2px;
   width: 30%;
   margin-top: 10px;
-  padding: 5px;
+  /* padding: 5px; */
 }
 
 .disp-card h2 {
   text-align: center;
+  margin: 2px;
+  font-size: 20px;
 }
 .disp-card h3 {
   text-align: center;

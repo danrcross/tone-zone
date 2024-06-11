@@ -83,13 +83,7 @@ import {
   curIntEl2,
   curIntAbbrEl2,
   curIntHsEl2,
-  triadName,
-  triadInv,
-  triadRoot,
   altChordDisp,
-  triadName2,
-  triadInv2,
-  triadRoot2,
   ctrlToggle,
   ctrlPanel,
   imgToggle,
@@ -101,6 +95,7 @@ import {
   chordCard1,
   chordCard2,
   chordLabel,
+  chordLabel2,
 } from "./dom.js";
 
 // Add functionality to nav bar
@@ -853,9 +848,10 @@ switch (window.location.pathname) {
         }
       }
       if (activeNotes.length < 3) {
+        chordLabel.css({ color: "white", "font-size": "20px" });
         chordLabel.text("Chord");
         chordCard1.css("background", "black");
-        triadName.text("");
+        chordCard2.css("display", "none");
       }
     });
     break;
