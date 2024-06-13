@@ -355,18 +355,6 @@ const chooseEnharmonic = (root, note2, note3) => {
       }
     }
     console.log(myIntNum);
-    // if (intMatcher === letInt) {
-    //   rootGood = root.pitch[0];
-    //   n2Good = note2.pitch[0] + note2.pitch[1];
-    // } else {
-    //   rootGood = root.pitch[0];
-    //   n2Good = note2.enharmonic[0] + note2.enharmonic[1];
-    //   if (note3.enharmonic) {
-    //     n3Good = note3.enharmonic[0] + note3.enharmonic[1];
-    //   } else {
-    //     n3Good = note3.pitch[0] + note3.pitch[1];
-    //   }
-    // }
     console.log(rootGood);
     console.log(n2Good);
     console.log(n3Good);
