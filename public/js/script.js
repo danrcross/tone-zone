@@ -1,4 +1,5 @@
 import Hi from "./helpers.js";
+// for p1 and p2
 import {
   p1El,
   p2El,
@@ -44,14 +45,14 @@ import {
   sliderLow2B,
   sliderMid2B,
   sliderHigh2B,
+} from "./dom.js";
+// for p3...
+// open synth
+import { ctrlToggle, ctrlPanel } from "./dom.js";
+// synths/controls
+import {
   synthList3A,
-  curPitch3AEl,
-  curFreq3AEl,
-  curVol3AEl,
   synthList3B,
-  curPitch3BEl,
-  curFreq3BEl,
-  curVol3BEl,
   volSlider3A,
   volSlider3B,
   volHandle3A,
@@ -69,9 +70,6 @@ import {
   sliderMid3B,
   sliderHigh3B,
   synthList3C,
-  curPitch3CEl,
-  curFreq3CEl,
-  curVol3CEl,
   volSlider3C,
   volHandle3C,
   handleHigh3C,
@@ -80,23 +78,29 @@ import {
   sliderLow3C,
   sliderMid3C,
   sliderHigh3C,
-  curIntEl2,
-  curIntAbbrEl2,
-  curIntHsEl2,
-  altChordDisp,
-  ctrlToggle,
-  ctrlPanel,
-  imgToggle,
-  imgDispToggle,
-  keyMapImg,
-  keyMapDiv,
+} from "./dom.js";
+// display cards
+import {
+  noteCardA,
+  noteCardB,
+  noteCardC,
   intCard1,
   intCard2,
   chordCard1,
   chordCard2,
-  chordLabel,
-  chordLabel2,
 } from "./dom.js";
+// display spans
+import {
+  noteSymA,
+  noteSymB,
+  noteSymC,
+  intSym1,
+  intSym2,
+  choSym1,
+  choSym2,
+} from "./dom.js";
+// keyboard setup/map
+import { imgToggle, imgDispToggle, keyMapImg, keyMapDiv } from "./dom.js";
 
 // Add functionality to nav bar
 const p1 = () => {
@@ -502,12 +506,12 @@ switch (window.location.pathname) {
     imgToggle.on("click", async function (event) {
       var curSrc = keyMapImg.attr("src");
       console.log();
-      if (curSrc === "assets/images/audiokeys-mapping-rows1.jpg") {
+      if (curSrc === "assets/images/audiokeys-1row.jpeg") {
         keyboard3._state.rows = 2;
         keyMapImg.attr("src", "assets/images/audiokeys-2row.jpeg");
       } else {
         keyboard3._state.rows = 1;
-        keyMapImg.attr("src", "assets/images/audiokeys-mapping-rows1.jpg");
+        keyMapImg.attr("src", "assets/images/audiokeys-1row.jpeg");
       }
     });
 
@@ -673,11 +677,36 @@ switch (window.location.pathname) {
       },
     });
 
-    //for loop to display notes based on order
+    const displayHandler = () => {
+      MyHi.resetChord(choSym1);
+      chordCard2.css("display", "none");
+      var sortedNotes = MyHi.orderNotes(activeNotes);
+      const noteSpans = [noteSymA, noteSymB, noteSymC];
+      for (var i = 0; i < 3; i++) {
+        if (sortedNotes[i]) {
+          MyHi.dispNote(sortedNotes[i], noteSpans[i]);
+          if (i === 1) {
+            MyHi.displayInt(sortedNotes[0], sortedNotes[1], intCard1);
+          } else if (i === 2) {
+            MyHi.displayInt(sortedNotes[1], sortedNotes[2], intCard2);
+            MyHi.triadAnalyzer(sortedNotes);
+          }
+        } else {
+          MyHi.resetNote(noteSpans[i]);
 
-    // define behavior when a key is pressed down
-    // I wonder if these down/up functions could be simplified...
+          if (i === 1) {
+            MyHi.resetInt(intSym1);
+          } else if (i === 2) {
+            MyHi.resetInt(intSym2);
+          }
+        }
+      }
+    };
+
     keyboard3.down(async (key) => {
+      if (activeNotes.length === 3) {
+        return;
+      }
       // if no active notes...
       if (!activeNotes.length) {
         //... get freq of key pressed
@@ -690,6 +719,7 @@ switch (window.location.pathname) {
           pitch: keyData.pitch,
           enharmonic: keyData.enharm,
           value: keyData.value,
+          keyCode: key.keyCode,
         };
         activeNotes.push(note);
         // play synth at 'key'
@@ -697,162 +727,111 @@ switch (window.location.pathname) {
       } else if (activeNotes.length === 1) {
         // similar to above, but if a note is active, second synth will be activated
         var keyData = await MyHi.getKeyNote(key);
+        var nextSynth;
+        var synthObj;
+        switch (activeNotes[0].synth) {
+          case "3A":
+            nextSynth = "3B";
+            synthObj = synth3B;
+            break;
+          case "3B":
+            nextSynth = "3A";
+            synthObj = synth3A;
+            break;
+          case "3C":
+            nextSynth = "3A";
+            synthObj = synth3A;
+            break;
+        }
         var note = {
           active: true,
           freq: keyData.freq,
-          synth: "3B",
+          synth: nextSynth,
           pitch: keyData.pitch,
           enharmonic: keyData.enharm,
           value: keyData.value,
+          keyCode: key.keyCode,
         };
         activeNotes.push(note);
-        MyHi.attackSynthNum(synth3B, key);
+        MyHi.attackSynthNum(synthObj, key);
       } else if (activeNotes.length === 2) {
         // similar to above, but if a note is active, second synth will be activated
         var keyData = await MyHi.getKeyNote(key);
+        var nextSynth;
+        var synthObj;
+        switch (activeNotes[0].synth) {
+          case "3A":
+            if (activeNotes[1].synth === "3B") {
+              nextSynth = "3C";
+              synthObj = synth3C;
+            } else {
+              nextSynth = "3B";
+              synthObj = synth3B;
+            }
+            break;
+          case "3B":
+            if (activeNotes[1].synth === "3A") {
+              nextSynth = "3C";
+              synthObj = synth3C;
+            } else {
+              nextSynth = "3A";
+              synthObj = synth3A;
+            }
+            break;
+          case "3C":
+            if (activeNotes[1].synth === "3A") {
+              nextSynth = "3B";
+              synthObj = synth3B;
+            } else {
+              nextSynth = "3A";
+              synthObj = synth3A;
+            }
+            break;
+        }
         var note = {
           active: true,
           freq: keyData.freq,
-          synth: "3C",
+          synth: nextSynth,
           pitch: keyData.pitch,
           enharmonic: keyData.enharm,
           value: keyData.value,
+          keyCode: key.keyCode,
         };
         activeNotes.push(note);
         // need to add another interval display
-        MyHi.attackSynthNum(synth3C, key);
+        MyHi.attackSynthNum(synthObj, key);
       } else if (activeNotes.length >= 3) {
         return;
       }
-      var sortedNotes = MyHi.orderNotes(activeNotes);
-      for (var i = 0; i < sortedNotes.length; i++) {
-        if (sortedNotes[i]) {
-          var note = sortedNotes[i];
-        }
-        switch (i) {
-          case 0:
-            if (sortedNotes[i]) {
-              MyHi.dispNote(note, curPitch3AEl);
-            } else {
-              MyHi.dispNote("", curPitch3AEl);
-            }
-            break;
-          case 1:
-            if (sortedNotes[i]) {
-              MyHi.dispNote(note, curPitch3BEl);
-              var int = MyHi.displayInt(
-                sortedNotes[0],
-                sortedNotes[1],
-                curIntAbbrEl,
-                intCard1
-              );
-              activeInts.push(int);
-            } else {
-              MyHi.dispNote("", curPitch3BEl);
-              var int = MyHi.displayInt("", "", curIntAbbrEl, intCard1);
-            }
-            break;
-          case 2:
-            if (sortedNotes[i]) {
-              MyHi.dispNote(note, curPitch3CEl);
-              var int = MyHi.displayInt(
-                sortedNotes[1],
-                sortedNotes[2],
-                curIntAbbrEl2,
-                intCard2
-              );
-              activeInts.push(int);
-            } else {
-              MyHi.dispNote("", curPitch3CEl);
-              MyHi.displayInt("", "", curIntAbbrEl2, intCard2);
-            }
-            break;
-        }
-      }
-      if (activeNotes.length === 3) {
-        var sortedNotes = MyHi.orderNotes(activeNotes);
-        MyHi.triadAnalyzer(sortedNotes);
-      }
+      displayHandler();
     });
 
     // define behavior when key is released
     keyboard3.up(async (key) => {
-      // get frequency corresponding to key released
-      var checkFreq = await MyHi.getKeyNote(key);
-      var myInd = null;
-      // get index of my note
-      activeNotes.forEach((note, index) => {
-        if (note.freq === checkFreq.freq) {
-          return (myInd = index);
-        }
-      });
+      const keyCodeUp = key.keyCode;
       // release synth that corresponds to 'synth' property of note released;
       // remove 'note' object from array of active notes
-      if (myInd === null) {
+      var noteIndex;
+      const myNote = activeNotes.find((note, index) => {
+        if (note.keyCode === keyCodeUp) {
+          noteIndex = index;
+          return note;
+        }
+      });
+      if (!myNote) {
         return;
       }
-      if (activeNotes.length === 3) {
-        activeInts = [];
-      }
-      if (activeNotes[myInd].synth === "3A") {
+      if (myNote.synth === "3A") {
         MyHi.releaseSynthNum(synth3A);
-        activeNotes.splice(myInd, 1);
-      } else if (activeNotes[myInd].synth === "3B") {
+        activeNotes.splice(noteIndex, 1);
+      } else if (myNote.synth === "3B") {
         MyHi.releaseSynthNum(synth3B);
-        activeNotes.splice(myInd, 1);
-      } else if (activeNotes[myInd].synth === "3C") {
+        activeNotes.splice(noteIndex, 1);
+      } else if (myNote.synth === "3C") {
         MyHi.releaseSynthNum(synth3C);
-        activeNotes.splice(myInd, 1);
+        activeNotes.splice(noteIndex, 1);
       }
-      var sortedNotes = MyHi.orderNotes(activeNotes);
-      for (var i = 0; i < 3; i++) {
-        if (sortedNotes[i]) {
-          var note = sortedNotes[i];
-        }
-        switch (i) {
-          case 0:
-            if (sortedNotes[i]) {
-              MyHi.dispNote(note, curPitch3AEl);
-            } else {
-              MyHi.dispNote("", curPitch3AEl);
-            }
-            break;
-          case 1:
-            if (sortedNotes[i]) {
-              MyHi.dispNote(note, curPitch3BEl);
-              MyHi.displayInt(
-                sortedNotes[0],
-                sortedNotes[1],
-                curIntAbbrEl,
-                intCard1
-              );
-            } else {
-              MyHi.dispNote("", curPitch3BEl);
-              MyHi.displayInt("", "", curIntAbbrEl, intCard1);
-            }
-            break;
-          case 2:
-            if (sortedNotes[i]) {
-              MyHi.dispNote(note, curPitch3CEl);
-              MyHi.displayInt(
-                sortedNotes[1],
-                sortedNotes[2],
-                curIntAbbrEl2,
-                intCard2
-              );
-            } else {
-              MyHi.dispNote("", curPitch3CEl);
-              MyHi.displayInt("", "", curIntAbbrEl2, intCard2);
-            }
-            break;
-        }
-      }
-      if (activeNotes.length < 3) {
-        chordLabel.css({ color: "white", "font-size": "20px" });
-        chordLabel.text("Chord");
-        chordCard1.css("background", "black");
-        chordCard2.css("display", "none");
-      }
+      displayHandler();
     });
     break;
 }

@@ -51,6 +51,7 @@ nav li:hover {
 }
 /* pertaining to display */
 
+/* Synth rack */
 .synth-rack {
   display: flex;
   justify-content: space-between;
@@ -62,6 +63,12 @@ nav li:hover {
   width: 30%;
   margin-top: 10px;
   padding: 5px;
+}
+.synth-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0px 20px;
 }
 
 .synth-dd {
@@ -85,73 +92,16 @@ select::-ms-expand {
 .opt-div {
   background-color: white;
 }
-.synth-card.a,
-.disp-card.a {
+.synth-card.a {
   background-color: var(--lt-red);
 }
-.synth-card.b,
-.disp-card.b {
+.synth-card.b {
   background-color: var(--lt-yel);
 }
-.synth-card.c,
-.disp-card.c {
+.synth-card.c {
   background-color: var(--lt-blue);
 }
 
-.disp-card.a,
-.disp-card.b,
-.disp-card.c {
-  background-color: black;
-}
-.disp-card.ab {
-  background-color: black;
-}
-.disp-card.bc {
-  background-color: black;
-}
-.disp-card h2 {
-  padding: 10px 5px;
-  color: white;
-}
-.disp-card.abc {
-  width: 60%;
-  background: black;
-  background-size: 200% 100%;
-  justify-content: center;
-
-  animation: AnimationName 1s linear infinite;
-}
-
-@keyframes AnimationName {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-.disp-card.abc-2 {
-  width: 60%;
-  background: black;
-  background-size: 200% 100%;
-  justify-content: center;
-
-  animation: AnimationName 1s linear infinite;
-}
-
-.synth-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 0px 20px;
-}
-/* .ctrl-toggle-el {
-  display: flex;
-  justify-content: center;
-} */
 .control-panel {
   display: flex;
   flex-direction: column;
@@ -213,118 +163,91 @@ select::-ms-expand {
   justify-content: space-between;
 }
 
-.disp-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
+/* ALL displays */
+
 .disp-card {
   border-radius: 10px;
   border: black solid 2px;
   width: 30%;
   margin-top: 10px;
-  /* padding: 5px; */
 }
-
 .disp-card h2 {
   text-align: center;
   margin: 2px;
   font-size: 20px;
 }
-.disp-card h3 {
-  text-align: center;
-}
-.info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.note-div {
-  display: flex;
-  justify-content: center;
-}
-.int-div {
-  display: flex;
-  justify-content: center;
-}
-.chord-div {
-  display: flex;
-  justify-content: center;
-}
-.note-name {
+.symbol {
   font-size: 50px;
   text-align: center;
 }
-.int-name {
+.disp-card h2 span {
+  color: black;
   font-size: 50px;
-  text-align: center;
 }
-.chord-name {
-  font-size: 50px;
-  text-align: center;
-}
-.table-val {
-  color: rgb(19, 97, 0);
-}
-.table-prop {
-  color: rgb(0, 59, 59);
-}
-.info-key {
+
+/* Note display */
+.note-disp-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.info-val {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.disp-card.a,
+.disp-card.b,
+.disp-card.c {
+  background-color: black;
 }
 
-.info-val > span {
-  display: block;
-  font-size: 1.17em;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: 200;
-  unicode-bidi: isolate;
-}
-
-.info-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-.info-col {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-.info-col > span {
-  display: block;
-  text-align: center;
-  font-size: 1.17em;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: 200;
-  unicode-bidi: isolate;
-}
-
+/* Interval display */
 .int-disp-row {
   display: flex;
   justify-content: space-around;
 }
+.disp-card.ab,
+.disp-card.bc {
+  background-color: black;
+}
+
+.disp-card h2 {
+  padding: 10px 5px;
+  color: white;
+}
+
+/* chord display */
 .chord-disp-row {
   display: flex;
   justify-content: center;
 }
-.cd-sub-row {
-  display: flex;
-  flex-direction: row;
+.disp-card.abc {
+  width: 30%;
+  background: black;
+  background-size: 200% 100%;
+  justify-content: center;
+
+  animation: AnimationName 1s linear infinite;
 }
+.disp-card.abc-2 {
+  width: 30%;
+  background: black;
+  background-size: 200% 100%;
+  justify-content: center;
+
+  animation: AnimationName 1s linear infinite;
+}
+
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* keyboard setup/map */
+
 #im-tog-div {
   display: flex;
   flex-direction: row;

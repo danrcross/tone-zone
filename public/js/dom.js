@@ -48,15 +48,12 @@ export const sliderMid2B = $("#slider-eq-mid-2b");
 export const sliderHigh2B = $("#slider-eq-high-2b");
 
 //p3
-export const play3 = $("#play3");
+// open synth
+export const ctrlToggle = $(".ctrl-toggle");
+export const ctrlPanel = $(".control-panel");
+// synth controls
 export const synthList3A = $("#synth-list-3a");
-export const curPitch3AEl = $("#cur-pitch-3A");
-export const curFreq3AEl = $("#cur-freq-3A");
-export const curVol3AEl = $("#cur-vol-3A");
 export const synthList3B = $("#synth-list-3b");
-export const curPitch3BEl = $("#cur-pitch-3B");
-export const curFreq3BEl = $("#cur-freq-3B");
-export const curVol3BEl = $("#cur-vol-3B");
 export const volSlider3A = $("#slider-v-3a");
 export const volHandle3A = $("#vol-hand-3a");
 export const volSlider3B = $("#slider-v-3b");
@@ -73,11 +70,7 @@ export const sliderHigh3A = $("#slider-eq-high-3a");
 export const sliderLow3B = $("#slider-eq-low-3b");
 export const sliderMid3B = $("#slider-eq-mid-3b");
 export const sliderHigh3B = $("#slider-eq-high-3b");
-
 export const synthList3C = $("#synth-list-3c");
-export const curPitch3CEl = $("#cur-pitch-3C");
-export const curFreq3CEl = $("#cur-freq-3C");
-export const curVol3CEl = $("#cur-vol-3C");
 export const volSlider3C = $("#slider-v-3c");
 export const volHandle3C = $("#vol-hand-3c");
 export const handleLow3C = $("#hand-eq-l-3c");
@@ -86,25 +79,24 @@ export const handleHigh3C = $("#hand-eq-h-3c");
 export const sliderLow3C = $("#slider-eq-low-3c");
 export const sliderMid3C = $("#slider-eq-mid-3c");
 export const sliderHigh3C = $("#slider-eq-high-3c");
-
-export const curIntEl2 = $("#cur-int-2");
-export const curIntAbbrEl2 = $("#cur-int-abbr-2");
-export const curIntHsEl2 = $("#cur-int-hs-2");
-
-export const triadName = $("#triad-name");
-export const altChordDisp = $("#alt-chord");
-export const triadName2 = $("#triad-name-2");
-
-export const ctrlToggle = $(".ctrl-toggle");
-export const ctrlPanel = $(".control-panel");
-export const imgToggle = $("#img-tog");
-export const imgDispToggle = $("#img-disp-tog");
-export const keyMapImg = $("#key-map");
-export const keyMapDiv = $(".kbrd-map");
-
+// display cards
+export const noteCardA = $(".disp-card.a");
+export const noteCardB = $(".disp-card.b");
+export const noteCardC = $(".disp-card.c");
 export const intCard1 = $(".disp-card.ab");
 export const intCard2 = $(".disp-card.bc");
 export const chordCard1 = $(".disp-card.abc");
 export const chordCard2 = $(".disp-card.abc-2");
-export const chordLabel = $("#cho-label");
-export const chordLabel2 = $("#cho-label-2");
+// display spans
+export const noteSymA = $("#note-3A");
+export const noteSymB = $("#note-3B");
+export const noteSymC = $("#note-3C");
+export const intSym1 = $("#int-1");
+export const intSym2 = $("#int-2");
+export const choSym1 = $("#chord-1");
+export const choSym2 = $("#chord-2");
+// keyboard setup/map
+export const imgToggle = $("#img-tog");
+export const imgDispToggle = $("#img-disp-tog");
+export const keyMapImg = $("#key-map");
+export const keyMapDiv = $(".kbrd-map");
