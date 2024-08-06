@@ -1085,9 +1085,12 @@ export default class Hi {
     var letVal1;
     var letVal2;
     var letVal3;
+    var rootGood;
+    var n2Good;
+    var n3Good;
     for (var i = 0; i < letVal.length; i++) {
+      console.log(root);
       if (root.pitch[0] === letVal[i].letter) {
-        console.log(root.pitch[0]);
         letVal1 = letVal[i].value;
       }
       if (note2.pitch[0] === letVal[i].letter) {
@@ -1099,12 +1102,13 @@ export default class Hi {
     }
 
     if (root.enharmonic) {
-      rootGood = note1.pitch[0] + note1.pitch[1];
+      rootGood = root.pitch[0] + root.pitch[1];
       n2Good = note2.pitch[0] + note2.pitch[1];
       n3Good = note3.pitch[0] + note3.pitch[1];
+      var adjChord = { root: rootGood, n2: n2Good, n3: n3Good };
+      console.log(adjChord);
     }
     if (!root.enharmonic && note2.enharmonic) {
-      var intMatcher;
       var myInt = root.value - note2.value;
       if (myInt < 0) {
         myInt = myInt * -1;
@@ -1115,8 +1119,6 @@ export default class Hi {
         letInt = letInt * -1;
       }
       console.log(letInt);
-
-      var myIntNum;
 
       if (intArr[myInt].abbr[1] == letInt) {
         rootGood = root.pitch[0];
@@ -1135,10 +1137,8 @@ export default class Hi {
           n3Good = note3.enharmonic[0] + note3.enharmonic[1];
         }
       }
-      console.log(myIntNum);
-      console.log(rootGood);
-      console.log(n2Good);
-      console.log(n3Good);
+      var adjChord = { root: rootGood, n2: n2Good, n3: n3Good };
+      console.log(adjChord);
     }
   };
 }
