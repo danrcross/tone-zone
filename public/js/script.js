@@ -677,7 +677,7 @@ switch (window.location.pathname) {
       },
     });
 
-    const displayHandler = () => {
+    const displayHandler = async () => {
       MyHi.resetChord(choSym1);
       chordCard2.css("display", "none");
       var sortedNotes = MyHi.orderNotes(activeNotes);
@@ -689,7 +689,7 @@ switch (window.location.pathname) {
             MyHi.displayInt(sortedNotes[0], sortedNotes[1], intCard1);
           } else if (i === 2) {
             MyHi.displayInt(sortedNotes[1], sortedNotes[2], intCard2);
-            MyHi.triadAnalyzer(sortedNotes);
+            var chordArr = await MyHi.triadAnalyzer(sortedNotes);
           }
         } else {
           MyHi.resetNote(noteSpans[i]);
@@ -699,6 +699,12 @@ switch (window.location.pathname) {
           } else if (i === 2) {
             MyHi.resetInt(intSym2);
           }
+        }
+      }
+      if (chordArr) {
+        const arr = chordArr[0];
+        if (arr.root) {
+          MyHi.chooseEnharmonic(arr.root, arr.note2, arr.note3);
         }
       }
     };

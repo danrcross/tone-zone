@@ -231,6 +231,37 @@ const intArr = [
   { value: 24, name: "Minor 2nd", abbr: "m2" },
 ];
 
+const letVal = [
+  {
+    letter: "A",
+    value: 1,
+  },
+  {
+    letter: "B",
+    value: 2,
+  },
+  {
+    letter: "C",
+    value: 3,
+  },
+  {
+    letter: "D",
+    value: 4,
+  },
+  {
+    letter: "E",
+    value: 5,
+  },
+  {
+    letter: "F",
+    value: 6,
+  },
+  {
+    letter: "G",
+    value: 7,
+  },
+];
+
 const majTri = "\u25B3";
 const dimDeg = "\u00B0";
 const triNoteArr = [
@@ -646,6 +677,16 @@ export default class Hi {
   }
 
   async triadAnalyzer(notesArr) {
+    var chord = {
+      root: null,
+      note2: null,
+      note3: null,
+    };
+    var chord2 = {
+      root: null,
+      note2: null,
+      note3: null,
+    };
     const parH2Nodes = chordCard1.find("h2").contents();
     if (parH2Nodes[0].textContent === `Chord`) {
       parH2Nodes[0].remove();
@@ -721,6 +762,11 @@ export default class Hi {
       choSym1.css({ color: "black", "font-size": "50px" });
       switch (matches[0].inversion) {
         case "Root":
+          chord = {
+            root: notesArr[0],
+            note2: notesArr[1],
+            note3: notesArr[2],
+          };
           if (notesArr[0].pitch.length === 2) {
             choSym1.text(notesArr[0].pitch[0] + matches[0].name);
           } else {
@@ -730,6 +776,11 @@ export default class Hi {
           }
           break;
         case "First":
+          chord = {
+            root: notesArr[2],
+            note2: notesArr[0],
+            note3: notesArr[1],
+          };
           if (notesArr[2].pitch.length === 2) {
             if (notesArr[0].pitch.length === 2) {
               choSym1.text(
@@ -769,6 +820,11 @@ export default class Hi {
           }
           break;
         case "Second":
+          chord = {
+            root: notesArr[1],
+            note2: notesArr[2],
+            note3: notesArr[0],
+          };
           if (notesArr[1].pitch.length === 2) {
             if (notesArr[0].pitch.length === 2) {
               choSym1.text(
@@ -808,6 +864,11 @@ export default class Hi {
           }
           break;
         case "Third":
+          chord = {
+            root: notesArr[1],
+            note2: notesArr[2],
+            note3: notesArr[0],
+          };
           if (notesArr[1].pitch.length === 2) {
             if (notesArr[0].pitch.length === 2) {
               choSym1.text(
@@ -852,6 +913,11 @@ export default class Hi {
         choSym2.css({ color: "black", "font-size": "50px" });
         switch (matches[1].inversion) {
           case "Root":
+            chord2 = {
+              root: notesArr[0],
+              note2: notesArr[1],
+              note3: notesArr[2],
+            };
             if (notesArr[0].pitch.length === 2) {
               chordLabel2.text(notesArr[0].pitch[0] + matches[1].name);
             } else {
@@ -861,6 +927,11 @@ export default class Hi {
             }
             break;
           case "First":
+            chord2 = {
+              root: notesArr[2],
+              note2: notesArr[0],
+              note3: notesArr[1],
+            };
             if (notesArr[2].pitch.length === 2) {
               if (notesArr[0].pitch.length === 2) {
                 choSym2.text(
@@ -900,6 +971,11 @@ export default class Hi {
             }
             break;
           case "Second":
+            chord2 = {
+              root: notesArr[1],
+              note2: notesArr[2],
+              note3: notesArr[0],
+            };
             if (notesArr[1].pitch.length === 2) {
               if (notesArr[0].pitch.length === 2) {
                 choSym2.text(
@@ -939,6 +1015,11 @@ export default class Hi {
             }
             break;
           case "Third":
+            chord2 = {
+              root: notesArr[1],
+              note2: notesArr[2],
+              note3: notesArr[0],
+            };
             if (notesArr[1].pitch.length === 2) {
               if (notesArr[0].pitch.length === 2) {
                 choSym2.text(
@@ -983,6 +1064,8 @@ export default class Hi {
       choSym1.text("Unknown Chord");
       chordCard2.css({ display: "none" });
     }
+    var chordArr = [chord, chord2];
+    return chordArr;
   }
   resetChord(choSymEl) {
     const parH2 = choSymEl.closest("h2");
@@ -998,4 +1081,64 @@ export default class Hi {
     array.sort((a, b) => a.value - b.value);
     return array;
   }
+  chooseEnharmonic = (root, note2, note3) => {
+    var letVal1;
+    var letVal2;
+    var letVal3;
+    var rootGood;
+    var n2Good;
+    var n3Good;
+    for (var i = 0; i < letVal.length; i++) {
+      console.log(root);
+      if (root.pitch[0] === letVal[i].letter) {
+        letVal1 = letVal[i].value;
+      }
+      if (note2.pitch[0] === letVal[i].letter) {
+        letVal2 = letVal[i].value;
+      }
+      if (note3.pitch[0] === letVal[i].letter) {
+        letVal3 = letVal[i].value;
+      }
+    }
+
+    if (root.enharmonic) {
+      rootGood = root.pitch[0] + root.pitch[1];
+      n2Good = note2.pitch[0] + note2.pitch[1];
+      n3Good = note3.pitch[0] + note3.pitch[1];
+      var adjChord = { root: rootGood, n2: n2Good, n3: n3Good };
+      console.log(adjChord);
+    }
+    if (!root.enharmonic && note2.enharmonic) {
+      var myInt = root.value - note2.value;
+      if (myInt < 0) {
+        myInt = myInt * -1;
+      }
+      console.log(letVal1);
+      var letInt = letVal2 - letVal1 + 1;
+      if (letInt < 0) {
+        letInt = letInt * -1;
+      }
+      console.log(letInt);
+
+      if (intArr[myInt].abbr[1] == letInt) {
+        rootGood = root.pitch[0];
+        n2Good = note2.pitch[0] + note2.pitch[1];
+        if (note3.enharmonic) {
+          n3Good = note3.pitch[0] + note3.pitch[1];
+        } else {
+          n3Good = note3.pitch[0];
+        }
+      } else {
+        rootGood = root.pitch[0];
+        n2Good = note2.enharmonic[0] + note2.enharmonic[1];
+        if (!note3.enharmonic) {
+          n3Good = note3.pitch[0];
+        } else {
+          n3Good = note3.enharmonic[0] + note3.enharmonic[1];
+        }
+      }
+      var adjChord = { root: rootGood, n2: n2Good, n3: n3Good };
+      console.log(adjChord);
+    }
+  };
 }
