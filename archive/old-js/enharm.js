@@ -365,123 +365,274 @@ chooseEnharmonic = (root, note2, note3) => {
 
 chooseEnharmonic(note1, note2, note3);
 
-triadAnalyzer(notesArr) {
-    var chord = {
-      root: null,
-      note2: null,
-      note3: null,
-    };
-    var chord2 = {
-      root: null,
-      note2: null,
-      note3: null,
-    };
-    const parH2Nodes = chordCard1.find("h2").contents();
-    if (parH2Nodes[0].textContent === `Chord`) {
-      parH2Nodes[0].remove();
-    }
-    const parH2Nodes2 = chordCard2.find("h2").contents();
-    if (parH2Nodes2[0].textContent === `Alternative Chord`) {
-      parH2Nodes2[0].remove();
-    }
-    choSym1.text("");
-    const orng = `var(--lt-orng)`;
-    const grn = `var(--lt-grn)`;
-    const prpl = `var(--lt-prpl)`;
-    var color1;
-    var color2;
-    var synths = [];
-    notesArr.forEach((note) => {
-      synths.push(note.synth);
-    });
-    switch (synths[0]) {
-      case "3A":
-        if (synths[1] === "3B") {
-          color1 = orng;
-          color2 = grn;
-        } else {
-          color1 = prpl;
-          color2 = grn;
-        }
-        break;
-      case "3B":
-        if (synths[1] === "3A") {
-          color1 = orng;
-          color2 = prpl;
-        } else {
-          color1 = grn;
-          color2 = prpl;
-        }
-        break;
-      case "3C":
-        if (synths[1] === "3A") {
-          color1 = prpl;
-          color2 = orng;
-        } else {
-          color1 = grn;
-          color2 = orng;
-        }
-    }
-    chordCard1.css({
-      background: `linear-gradient(270deg, ${color1} , ${color2} )`,
-      "background-size": `400% 400%`,
-      animation: `AnimationName 2s ease infinite`,
-    });
-    chordCard2.css({
-      background: `linear-gradient(270deg, ${color1} , ${color2} )`,
-      "background-size": `400% 400%`,
-      animation: `AnimationName 2s ease infinite`,
-    });
-
-    const noteVals = notesArr.map((note) => note.value);
-    let thisIntArr = [];
-    for (var i = 0; i < noteVals.length - 1; i++) {
-      const newInt = noteVals[i + 1] - noteVals[i];
-      thisIntArr.push(newInt);
-    }
-    var matches = triNoteArr.filter((match) => {
-      if (match.intervals[0] === thisIntArr[0]) {
-        if (match.intervals[1] === thisIntArr[1]) {
-          return match;
-        }
+triadAnalyzer = (notesArr) => {
+  var chord = {
+    root: null,
+    note2: null,
+    note3: null,
+  };
+  var chord2 = {
+    root: null,
+    note2: null,
+    note3: null,
+  };
+  const parH2Nodes = chordCard1.find("h2").contents();
+  if (parH2Nodes[0].textContent === `Chord`) {
+    parH2Nodes[0].remove();
+  }
+  const parH2Nodes2 = chordCard2.find("h2").contents();
+  if (parH2Nodes2[0].textContent === `Alternative Chord`) {
+    parH2Nodes2[0].remove();
+  }
+  choSym1.text("");
+  const orng = `var(--lt-orng)`;
+  const grn = `var(--lt-grn)`;
+  const prpl = `var(--lt-prpl)`;
+  var color1;
+  var color2;
+  var synths = [];
+  notesArr.forEach((note) => {
+    synths.push(note.synth);
+  });
+  switch (synths[0]) {
+    case "3A":
+      if (synths[1] === "3B") {
+        color1 = orng;
+        color2 = grn;
+      } else {
+        color1 = prpl;
+        color2 = grn;
       }
-    });
-    if (matches.length) {
-      chordCard2.css({ display: "none" });
-      choSym1.css({ color: "black", "font-size": "50px" });
-      switch (matches[0].inversion) {
+      break;
+    case "3B":
+      if (synths[1] === "3A") {
+        color1 = orng;
+        color2 = prpl;
+      } else {
+        color1 = grn;
+        color2 = prpl;
+      }
+      break;
+    case "3C":
+      if (synths[1] === "3A") {
+        color1 = prpl;
+        color2 = orng;
+      } else {
+        color1 = grn;
+        color2 = orng;
+      }
+  }
+  chordCard1.css({
+    background: `linear-gradient(270deg, ${color1} , ${color2} )`,
+    "background-size": `400% 400%`,
+    animation: `AnimationName 2s ease infinite`,
+  });
+  chordCard2.css({
+    background: `linear-gradient(270deg, ${color1} , ${color2} )`,
+    "background-size": `400% 400%`,
+    animation: `AnimationName 2s ease infinite`,
+  });
+
+  const noteVals = notesArr.map((note) => note.value);
+  let thisIntArr = [];
+  for (var i = 0; i < noteVals.length - 1; i++) {
+    const newInt = noteVals[i + 1] - noteVals[i];
+    thisIntArr.push(newInt);
+  }
+  var matches = triNoteArr.filter((match) => {
+    if (match.intervals[0] === thisIntArr[0]) {
+      if (match.intervals[1] === thisIntArr[1]) {
+        return match;
+      }
+    }
+  });
+  if (matches.length) {
+    chordCard2.css({ display: "none" });
+    choSym1.css({ color: "black", "font-size": "50px" });
+    switch (matches[0].inversion) {
+      case "Root":
+        chord = {
+          root: notesArr[0],
+          note2: notesArr[1],
+          note3: notesArr[2],
+        };
+        if (notesArr[0].pitch.length === 2) {
+          choSym1.text(notesArr[0].pitch[0] + matches[0].name);
+        } else {
+          choSym1.text(
+            notesArr[0].pitch[0] + notesArr[0].pitch[1] + matches[0].name
+          );
+        }
+        break;
+      case "First":
+        chord = {
+          root: notesArr[2],
+          note2: notesArr[0],
+          note3: notesArr[1],
+        };
+        if (notesArr[2].pitch.length === 2) {
+          if (notesArr[0].pitch.length === 2) {
+            choSym1.text(
+              notesArr[2].pitch[0] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0]
+            );
+          } else if (notesArr[0].pitch.length === 3) {
+            choSym1.text(
+              notesArr[2].pitch[0] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0] +
+                notesArr[0].pitch[1]
+            );
+          }
+        } else {
+          if (notesArr[0].pitch.length === 2) {
+            choSym1.text(
+              notesArr[2].pitch[0] +
+                notesArr[2].pitch[1] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0]
+            );
+          } else if (notesArr[0].pitch.length === 3) {
+            choSym1.text(
+              notesArr[2].pitch[0] +
+                notesArr[2].pitch[1] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0] +
+                notesArr[0].pitch[1]
+            );
+          }
+        }
+        break;
+      case "Second":
+        chord = {
+          root: notesArr[1],
+          note2: notesArr[2],
+          note3: notesArr[0],
+        };
+        if (notesArr[1].pitch.length === 2) {
+          if (notesArr[0].pitch.length === 2) {
+            choSym1.text(
+              notesArr[1].pitch[0] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0]
+            );
+          } else if (notesArr[1].pitch.length === 3) {
+            choSym1.text(
+              notesArr[1].pitch[0] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0] +
+                notesArr[0].pitch[1]
+            );
+          }
+        } else {
+          if (notesArr[0].pitch.length === 2) {
+            choSym1.text(
+              notesArr[1].pitch[0] +
+                notesArr[1].pitch[1] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0]
+            );
+          } else if (notesArr[0].pitch.length === 3) {
+            choSym1.text(
+              notesArr[1].pitch[0] +
+                notesArr[1].pitch[1] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0] +
+                notesArr[0].pitch[1]
+            );
+          }
+        }
+        break;
+      case "Third":
+        chord = {
+          root: notesArr[1],
+          note2: notesArr[2],
+          note3: notesArr[0],
+        };
+        if (notesArr[1].pitch.length === 2) {
+          if (notesArr[0].pitch.length === 2) {
+            choSym1.text(
+              notesArr[1].pitch[0] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0]
+            );
+          } else if (notesArr[1].pitch.length === 3) {
+            choSym1.text(
+              notesArr[1].pitch[0] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0] +
+                notesArr[0].pitch[1]
+            );
+          }
+        } else {
+          if (notesArr[0].pitch.length === 2) {
+            choSym1.text(
+              notesArr[1].pitch[0] +
+                notesArr[1].pitch[1] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0]
+            );
+          } else if (notesArr[0].pitch.length === 3) {
+            choSym1.text(
+              notesArr[1].pitch[0] +
+                notesArr[1].pitch[1] +
+                matches[0].name +
+                "/" +
+                notesArr[0].pitch[0] +
+                notesArr[0].pitch[1]
+            );
+          }
+        }
+    }
+    if (matches.length > 1) {
+      chordCard2.css({ display: "flex", width: "30%" });
+      chordCard1.css({ display: "flex", width: "30%" });
+      choSym2.css({ color: "black", "font-size": "50px" });
+      switch (matches[1].inversion) {
         case "Root":
-          chord = {
+          chord2 = {
             root: notesArr[0],
             note2: notesArr[1],
             note3: notesArr[2],
           };
           if (notesArr[0].pitch.length === 2) {
-            choSym1.text(notesArr[0].pitch[0] + matches[0].name);
+            chordLabel2.text(notesArr[0].pitch[0] + matches[1].name);
           } else {
-            choSym1.text(
-              notesArr[0].pitch[0] + notesArr[0].pitch[1] + matches[0].name
+            chordLabel2.text(
+              notesArr[0].pitch[0] + notesArr[0].pitch[1] + matches[1].name
             );
           }
           break;
         case "First":
-          chord = {
+          chord2 = {
             root: notesArr[2],
             note2: notesArr[0],
             note3: notesArr[1],
           };
           if (notesArr[2].pitch.length === 2) {
             if (notesArr[0].pitch.length === 2) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[2].pitch[0] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0]
               );
             } else if (notesArr[0].pitch.length === 3) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[2].pitch[0] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0] +
                   notesArr[0].pitch[1]
@@ -489,18 +640,18 @@ triadAnalyzer(notesArr) {
             }
           } else {
             if (notesArr[0].pitch.length === 2) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[2].pitch[0] +
                   notesArr[2].pitch[1] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0]
               );
             } else if (notesArr[0].pitch.length === 3) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[2].pitch[0] +
                   notesArr[2].pitch[1] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0] +
                   notesArr[0].pitch[1]
@@ -509,23 +660,23 @@ triadAnalyzer(notesArr) {
           }
           break;
         case "Second":
-          chord = {
+          chord2 = {
             root: notesArr[1],
             note2: notesArr[2],
             note3: notesArr[0],
           };
           if (notesArr[1].pitch.length === 2) {
             if (notesArr[0].pitch.length === 2) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[1].pitch[0] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0]
               );
             } else if (notesArr[1].pitch.length === 3) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[1].pitch[0] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0] +
                   notesArr[0].pitch[1]
@@ -533,18 +684,18 @@ triadAnalyzer(notesArr) {
             }
           } else {
             if (notesArr[0].pitch.length === 2) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[1].pitch[0] +
                   notesArr[1].pitch[1] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0]
               );
             } else if (notesArr[0].pitch.length === 3) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[1].pitch[0] +
                   notesArr[1].pitch[1] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0] +
                   notesArr[0].pitch[1]
@@ -553,23 +704,23 @@ triadAnalyzer(notesArr) {
           }
           break;
         case "Third":
-          chord = {
+          chord2 = {
             root: notesArr[1],
             note2: notesArr[2],
             note3: notesArr[0],
           };
           if (notesArr[1].pitch.length === 2) {
             if (notesArr[0].pitch.length === 2) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[1].pitch[0] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0]
               );
             } else if (notesArr[1].pitch.length === 3) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[1].pitch[0] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0] +
                   notesArr[0].pitch[1]
@@ -577,18 +728,18 @@ triadAnalyzer(notesArr) {
             }
           } else {
             if (notesArr[0].pitch.length === 2) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[1].pitch[0] +
                   notesArr[1].pitch[1] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0]
               );
             } else if (notesArr[0].pitch.length === 3) {
-              choSym1.text(
+              choSym2.text(
                 notesArr[1].pitch[0] +
                   notesArr[1].pitch[1] +
-                  matches[0].name +
+                  matches[1].name +
                   "/" +
                   notesArr[0].pitch[0] +
                   notesArr[0].pitch[1]
@@ -596,163 +747,12 @@ triadAnalyzer(notesArr) {
             }
           }
       }
-      if (matches.length > 1) {
-        chordCard2.css({ display: "flex", width: "30%" });
-        chordCard1.css({ display: "flex", width: "30%" });
-        choSym2.css({ color: "black", "font-size": "50px" });
-        switch (matches[1].inversion) {
-          case "Root":
-            chord2 = {
-              root: notesArr[0],
-              note2: notesArr[1],
-              note3: notesArr[2],
-            };
-            if (notesArr[0].pitch.length === 2) {
-              chordLabel2.text(notesArr[0].pitch[0] + matches[1].name);
-            } else {
-              chordLabel2.text(
-                notesArr[0].pitch[0] + notesArr[0].pitch[1] + matches[1].name
-              );
-            }
-            break;
-          case "First":
-            chord2 = {
-              root: notesArr[2],
-              note2: notesArr[0],
-              note3: notesArr[1],
-            };
-            if (notesArr[2].pitch.length === 2) {
-              if (notesArr[0].pitch.length === 2) {
-                choSym2.text(
-                  notesArr[2].pitch[0] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0]
-                );
-              } else if (notesArr[0].pitch.length === 3) {
-                choSym2.text(
-                  notesArr[2].pitch[0] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0] +
-                    notesArr[0].pitch[1]
-                );
-              }
-            } else {
-              if (notesArr[0].pitch.length === 2) {
-                choSym2.text(
-                  notesArr[2].pitch[0] +
-                    notesArr[2].pitch[1] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0]
-                );
-              } else if (notesArr[0].pitch.length === 3) {
-                choSym2.text(
-                  notesArr[2].pitch[0] +
-                    notesArr[2].pitch[1] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0] +
-                    notesArr[0].pitch[1]
-                );
-              }
-            }
-            break;
-          case "Second":
-            chord2 = {
-              root: notesArr[1],
-              note2: notesArr[2],
-              note3: notesArr[0],
-            };
-            if (notesArr[1].pitch.length === 2) {
-              if (notesArr[0].pitch.length === 2) {
-                choSym2.text(
-                  notesArr[1].pitch[0] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0]
-                );
-              } else if (notesArr[1].pitch.length === 3) {
-                choSym2.text(
-                  notesArr[1].pitch[0] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0] +
-                    notesArr[0].pitch[1]
-                );
-              }
-            } else {
-              if (notesArr[0].pitch.length === 2) {
-                choSym2.text(
-                  notesArr[1].pitch[0] +
-                    notesArr[1].pitch[1] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0]
-                );
-              } else if (notesArr[0].pitch.length === 3) {
-                choSym2.text(
-                  notesArr[1].pitch[0] +
-                    notesArr[1].pitch[1] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0] +
-                    notesArr[0].pitch[1]
-                );
-              }
-            }
-            break;
-          case "Third":
-            chord2 = {
-              root: notesArr[1],
-              note2: notesArr[2],
-              note3: notesArr[0],
-            };
-            if (notesArr[1].pitch.length === 2) {
-              if (notesArr[0].pitch.length === 2) {
-                choSym2.text(
-                  notesArr[1].pitch[0] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0]
-                );
-              } else if (notesArr[1].pitch.length === 3) {
-                choSym2.text(
-                  notesArr[1].pitch[0] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0] +
-                    notesArr[0].pitch[1]
-                );
-              }
-            } else {
-              if (notesArr[0].pitch.length === 2) {
-                choSym2.text(
-                  notesArr[1].pitch[0] +
-                    notesArr[1].pitch[1] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0]
-                );
-              } else if (notesArr[0].pitch.length === 3) {
-                choSym2.text(
-                  notesArr[1].pitch[0] +
-                    notesArr[1].pitch[1] +
-                    matches[1].name +
-                    "/" +
-                    notesArr[0].pitch[0] +
-                    notesArr[0].pitch[1]
-                );
-              }
-            }
-        }
-      }
-    } else {
-      choSym1.css({ color: "white", "font-size": "20px" });
-      choSym1.text("Unknown Chord");
-      chordCard2.css({ display: "none" });
     }
-    var chordArr = [chord, chord2];
-    return chordArr;
+  } else {
+    choSym1.css({ color: "white", "font-size": "20px" });
+    choSym1.text("Unknown Chord");
+    chordCard2.css({ display: "none" });
   }
+  var chordArr = [chord, chord2];
+  return chordArr;
+};
