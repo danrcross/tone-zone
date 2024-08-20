@@ -187,7 +187,6 @@ switch (window.location.pathname) {
     ctrlToggle.on("click", async function (event) {
       const modContainers = $(".mod-container");
       var dispStatus = modContainers.css("display");
-      console.log(dispStatus);
       if (dispStatus !== "none") {
         ctrlToggle.text("Open Synth Controls");
         modContainers.css({ display: "none" });
@@ -199,7 +198,6 @@ switch (window.location.pathname) {
 
     imgToggle.on("click", async function (event) {
       var curSrc = keyMapImg.attr("src");
-      console.log();
       if (curSrc === "assets/images/audiokeys-1row.jpeg") {
         keyboard3._state.rows = 2;
         keyMapImg.attr("src", "assets/images/audiokeys-2row.jpeg");

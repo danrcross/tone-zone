@@ -1089,7 +1089,6 @@ export default class Hi {
     var n2Good;
     var n3Good;
     for (var i = 0; i < letVal.length; i++) {
-      console.log(root);
       if (root.pitch[0] === letVal[i].letter) {
         letVal1 = letVal[i].value;
       }
@@ -1106,19 +1105,16 @@ export default class Hi {
       n2Good = note2.pitch[0] + note2.pitch[1];
       n3Good = note3.pitch[0] + note3.pitch[1];
       var adjChord = { root: rootGood, n2: n2Good, n3: n3Good };
-      console.log(adjChord);
     }
     if (!root.enharmonic && note2.enharmonic) {
       var myInt = root.value - note2.value;
       if (myInt < 0) {
         myInt = myInt * -1;
       }
-      console.log(letVal1);
       var letInt = letVal2 - letVal1 + 1;
       if (letInt < 0) {
         letInt = letInt * -1;
       }
-      console.log(letInt);
 
       if (intArr[myInt].abbr[1] == letInt) {
         rootGood = root.pitch[0];
