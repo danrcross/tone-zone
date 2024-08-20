@@ -1134,7 +1134,6 @@ export default class Hi {
         }
       }
       var adjChord = { root: rootGood, n2: n2Good, n3: n3Good };
-      console.log(adjChord);
     }
   };
 }
